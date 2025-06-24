@@ -131,6 +131,36 @@
     border-width: 0 !important;
 }
 
+/* Remove ALL vertical lines and borders */
+#header .content:before,
+#header .content:after {
+    display: none !important;
+    content: none !important;
+}
+
+#header:before,
+#header:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Specifically target the middle vertical line */
+#header nav.use-middle:before,
+#header nav.use-middle:after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Remove any wrapper lines */
+#wrapper:before,
+#wrapper:after {
+    display: none !important;
+    content: none !important;
+}
+
 /* Complete Navigation Override - Remove All Borders and Lines */
 #header nav {
     border: none !important;
