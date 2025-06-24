@@ -33,11 +33,17 @@
     margin: 1.5rem 0;
     list-style: none !important;
     padding: 0 !important;
+    pointer-events: auto !important;
+    z-index: 9999 !important;
+    position: relative !important;
 }
 
 .social-icons li {
     padding: 0 !important;
     border: none !important;
+    pointer-events: auto !important;
+    z-index: 9999 !important;
+    position: relative !important;
 }
 
 .social-icons li a {
@@ -52,12 +58,18 @@
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: #ffffff !important;
     text-decoration: none !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    z-index: 9999 !important;
+    position: relative !important;
 }
 
 .social-icons li a:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
     border-color: rgba(255, 255, 255, 0.4);
+    pointer-events: auto !important;
+    cursor: pointer !important;
 }
 
 .resume-download {
