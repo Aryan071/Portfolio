@@ -206,7 +206,7 @@ nav.use-middle:before,
     height: 0 !important;
 }
 
-/* Complete Navigation Override - Individual and Overall Borders */
+/* Complete Navigation Override - Individual Bordered Rectangles */
 #header nav {
     border: none !important;
     background: none !important;
@@ -217,30 +217,30 @@ nav.use-middle:before,
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important;
-    border-radius: 8px !important;
-    background: rgba(255, 255, 255, 0.05) !important;
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
     list-style: none !important;
     margin: 0 !important;
-    padding: 0.5rem !important;
-    gap: 0.5rem !important;
+    padding: 0 !important;
+    gap: 0.75rem !important;
     overflow: visible !important;
 }
 
 #header nav ul li {
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
     background: rgba(255, 255, 255, 0.08) !important;
     margin: 0 !important;
     padding: 0 !important;
     display: inline-block !important;
     position: relative !important;
-    flex: 1 !important;
+    flex: 0 0 auto !important;
     border-radius: 4px !important;
     transition: all 0.3s ease !important;
 }
 
 #header nav ul li:hover {
-    border-color: rgba(255, 255, 255, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.7) !important;
     background: rgba(255, 255, 255, 0.15) !important;
     transform: translateY(-1px) !important;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
@@ -252,7 +252,7 @@ nav.use-middle:before,
     width: 100% !important;
     height: auto !important;
     line-height: normal !important;
-    padding: 0.75rem 1rem !important;
+    padding: 0.75rem 1.25rem !important;
     border: none !important;
     text-align: center !important;
     background: transparent !important;
@@ -264,6 +264,7 @@ nav.use-middle:before,
     letter-spacing: 0.1rem !important;
     font-size: 0.75rem !important;
     font-weight: 600 !important;
+    white-space: nowrap !important;
 }
 
 #header nav ul li a:hover {
@@ -298,35 +299,32 @@ nav.use-middle:before,
     border-left: none !important;
 }
 
-/* Enhanced Mobile Navigation - Bordered Version */
+/* Enhanced Mobile Navigation - Individual Bordered Items */
 @media screen and (max-width: 980px) {
     #header nav ul {
         flex-direction: row !important;
-        flex-wrap: nowrap !important;
+        flex-wrap: wrap !important;
         width: 100% !important;
         justify-content: center !important;
-        gap: 0.25rem !important;
+        gap: 0.5rem !important;
         max-width: 100% !important;
         margin: 0 auto !important;
-        padding: 0.4rem !important;
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
+        padding: 0 !important;
     }
 
     #header nav ul li {
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
         width: auto !important;
         flex: 0 0 auto !important;
         margin: 0 !important;
-        min-width: 70px !important;
-        white-space: nowrap !important;
+        min-width: 80px !important;
     }
 
     #header nav ul li a {
         min-width: auto !important;
-        padding: 0.5rem 0.6rem !important;
-        font-size: 0.65rem !important;
-        letter-spacing: 0.05rem !important;
+        padding: 0.6rem 1rem !important;
+        font-size: 0.7rem !important;
+        letter-spacing: 0.08rem !important;
     }
 }
 
@@ -337,17 +335,17 @@ nav.use-middle:before,
         width: 100% !important;
         max-width: 100% !important;
         margin: 0 auto !important;
-        gap: 0.25rem !important;
-        padding: 0.4rem !important;
+        gap: 0.4rem !important;
+        padding: 0 !important;
         justify-content: center !important;
     }
 
     #header nav ul li {
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
         width: auto !important;
         margin: 0 !important;
         flex: 0 0 auto !important;
-        min-width: 65px !important;
+        min-width: 70px !important;
     }
 
     #header nav ul li a {
@@ -356,8 +354,8 @@ nav.use-middle:before,
         height: auto !important;
         line-height: normal !important;
         text-align: center !important;
-        padding: 0.6rem 0.5rem !important;
-        font-size: 0.6rem !important;
+        padding: 0.6rem 0.8rem !important;
+        font-size: 0.65rem !important;
         letter-spacing: 0.05rem !important;
     }
 }
@@ -369,12 +367,12 @@ nav.use-middle:before,
         width: 100% !important;
         max-width: 280px !important;
         margin: 0 auto !important;
-        gap: 0.3rem !important;
-        padding: 0.4rem !important;
+        gap: 0.5rem !important;
+        padding: 0 !important;
     }
 
     #header nav ul li {
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
         width: 100% !important;
         flex: none !important;
         margin: 0 !important;
@@ -382,8 +380,8 @@ nav.use-middle:before,
 
     #header nav ul li a {
         width: 100% !important;
-        padding: 0.75rem !important;
-        font-size: 0.7rem !important;
+        padding: 0.8rem !important;
+        font-size: 0.75rem !important;
         text-align: center !important;
     }
 }
@@ -393,12 +391,12 @@ nav.use-middle:before,
         flex-direction: column !important;
         min-width: auto !important;
         max-width: 260px !important;
-        gap: 0.25rem !important;
-        padding: 0.3rem !important;
+        gap: 0.4rem !important;
+        padding: 0 !important;
     }
 
     #header nav ul li {
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
         width: 100% !important;
     }
 
@@ -407,49 +405,48 @@ nav.use-middle:before,
         line-height: normal !important;
         min-width: 0 !important;
         width: 100% !important;
-        padding: 0.7rem !important;
-        font-size: 0.65rem !important;
+        padding: 0.75rem !important;
+        font-size: 0.7rem !important;
     }
 }
 
-/* Landscape mobile optimization - Bordered Version */
+/* Landscape mobile optimization - Individual Bordered Items */
 @media screen and (max-width: 736px) and (orientation: landscape) {
     #header nav ul {
         flex-direction: row !important;
-        flex-wrap: nowrap !important;
+        flex-wrap: wrap !important;
         max-width: 100% !important;
-        gap: 0.2rem !important;
+        gap: 0.3rem !important;
         justify-content: center !important;
-        padding: 0.25rem !important;
-        overflow-x: auto !important;
+        padding: 0 !important;
     }
 
     #header nav ul li {
         width: auto !important;
         flex: 0 0 auto !important;
-        min-width: 65px !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        min-width: 70px !important;
+        border: 1px solid rgba(255, 255, 255, 0.4) !important;
     }
 
     #header nav ul li a {
-        padding: 0.5rem 0.4rem !important;
+        padding: 0.5rem 0.7rem !important;
         font-size: 0.6rem !important;
         min-width: auto !important;
         letter-spacing: 0.05rem !important;
     }
 }
 
-/* Very small screens - Stack vertically */
+/* Very small screens - Individual Bordered Items */
 @media screen and (max-width: 360px) {
     #header nav ul {
         max-width: 240px !important;
-        gap: 0.2rem !important;
-        padding: 0.25rem !important;
+        gap: 0.3rem !important;
+        padding: 0 !important;
     }
 
     #header nav ul li a {
-        padding: 0.6rem !important;
-        font-size: 0.6rem !important;
+        padding: 0.65rem !important;
+        font-size: 0.65rem !important;
     }
 }
 
