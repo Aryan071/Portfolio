@@ -1,5 +1,16 @@
 /* Custom Styles for Professional Portfolio */
 
+/* REMOVE CIRCLE ABOVE NAME */
+#header .logo {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 /* Header Enhancements */
 #header .content .inner {
     padding: 3rem 2rem !important;
@@ -243,11 +254,11 @@ nav.use-middle:before,
     height: auto !important;
     line-height: normal !important;
     padding: 0.75rem 1.25rem !important;
-    border: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-bottom: none !important;
     text-align: center !important;
     background: rgba(255, 255, 255, 0.08) !important;
-    border-radius: 6px !important;
+    border-radius: 0 !important;
     transition: all 0.3s ease !important;
     color: #ffffff !important;
     text-decoration: none !important;
@@ -257,11 +268,25 @@ nav.use-middle:before,
     font-weight: 600 !important;
 }
 
+#header nav ul li:first-child a {
+    border-radius: 6px 0 0 6px !important;
+}
+
+#header nav ul li:last-child a {
+    border-radius: 0 6px 6px 0 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
+}
+
+#header nav ul li:not(:first-child) a {
+    border-left: none !important;
+}
+
 #header nav ul li a:hover {
     background: rgba(255, 255, 255, 0.15) !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
     color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.5) !important;
 }
 
 #header nav ul li a:active,
@@ -269,6 +294,7 @@ nav.use-middle:before,
     background: linear-gradient(135deg, #667eea, #764ba2) !important;
     color: #ffffff !important;
     transform: translateY(0) !important;
+    border-color: #667eea !important;
 }
 
 /* Remove any pseudo-elements that might create lines */
@@ -971,6 +997,44 @@ nav.use-middle:before,
     font-weight: 600;
     display: inline-block;
     margin-bottom: 0.5rem;
+}
+
+.cert-details {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cert-details h4 {
+    color: #764ba2;
+    font-size: 1rem;
+    margin-top: 1.25rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+.cert-details h4:first-child {
+    margin-top: 0;
+}
+
+.cert-details ul {
+    margin-bottom: 1rem;
+}
+
+.cert-details ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+}
+
+.cert-details .tech-stack {
+    background: rgba(255, 255, 255, 0.08);
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin: 0.75rem 0 1.25rem 0;
+    font-size: 0.9em;
+    border-left: 3px solid #667eea;
 }
 
 .learning-goals {
