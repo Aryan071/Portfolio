@@ -302,13 +302,15 @@ nav.use-middle:before,
 @media screen and (max-width: 980px) {
     #header nav ul {
         flex-direction: row !important;
-        flex-wrap: wrap !important;
+        flex-wrap: nowrap !important;
         width: 100% !important;
         justify-content: center !important;
-        gap: 0.4rem !important;
-        max-width: 600px !important;
+        gap: 0.25rem !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
         padding: 0.4rem !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
     }
 
     #header nav ul li {
@@ -316,31 +318,36 @@ nav.use-middle:before,
         width: auto !important;
         flex: 0 0 auto !important;
         margin: 0 !important;
-        min-width: 80px !important;
+        min-width: 70px !important;
+        white-space: nowrap !important;
     }
 
     #header nav ul li a {
         min-width: auto !important;
-        padding: 0.6rem 0.8rem !important;
-        font-size: 0.7rem !important;
+        padding: 0.5rem 0.6rem !important;
+        font-size: 0.65rem !important;
+        letter-spacing: 0.05rem !important;
     }
 }
 
 @media screen and (max-width: 768px) {
     #header nav ul {
-        flex-direction: column !important;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
         width: 100% !important;
-        max-width: 300px !important;
+        max-width: 100% !important;
         margin: 0 auto !important;
-        gap: 0.4rem !important;
-        padding: 0.5rem !important;
+        gap: 0.25rem !important;
+        padding: 0.4rem !important;
+        justify-content: center !important;
     }
 
     #header nav ul li {
         border: 1px solid rgba(255, 255, 255, 0.3) !important;
-        width: 100% !important;
+        width: auto !important;
         margin: 0 !important;
-        flex: none !important;
+        flex: 0 0 auto !important;
+        min-width: 65px !important;
     }
 
     #header nav ul li a {
@@ -349,8 +356,35 @@ nav.use-middle:before,
         height: auto !important;
         line-height: normal !important;
         text-align: center !important;
-        padding: 1rem !important;
-        font-size: 0.8rem !important;
+        padding: 0.6rem 0.5rem !important;
+        font-size: 0.6rem !important;
+        letter-spacing: 0.05rem !important;
+    }
+}
+
+@media screen and (max-width: 640px) {
+    #header nav ul {
+        flex-direction: column !important;
+        flex-wrap: nowrap !important;
+        width: 100% !important;
+        max-width: 280px !important;
+        margin: 0 auto !important;
+        gap: 0.3rem !important;
+        padding: 0.4rem !important;
+    }
+
+    #header nav ul li {
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        width: 100% !important;
+        flex: none !important;
+        margin: 0 !important;
+    }
+
+    #header nav ul li a {
+        width: 100% !important;
+        padding: 0.75rem !important;
+        font-size: 0.7rem !important;
+        text-align: center !important;
     }
 }
 
@@ -358,13 +392,14 @@ nav.use-middle:before,
     #header nav ul {
         flex-direction: column !important;
         min-width: auto !important;
-        max-width: 280px !important;
-        gap: 0.3rem !important;
-        padding: 0.4rem !important;
+        max-width: 260px !important;
+        gap: 0.25rem !important;
+        padding: 0.3rem !important;
     }
 
     #header nav ul li {
         border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        width: 100% !important;
     }
 
     #header nav ul li a {
@@ -372,8 +407,8 @@ nav.use-middle:before,
         line-height: normal !important;
         min-width: 0 !important;
         width: 100% !important;
-        padding: 0.875rem !important;
-        font-size: 0.75rem !important;
+        padding: 0.7rem !important;
+        font-size: 0.65rem !important;
     }
 }
 
@@ -381,24 +416,40 @@ nav.use-middle:before,
 @media screen and (max-width: 736px) and (orientation: landscape) {
     #header nav ul {
         flex-direction: row !important;
-        flex-wrap: wrap !important;
-        max-width: none !important;
-        gap: 0.25rem !important;
+        flex-wrap: nowrap !important;
+        max-width: 100% !important;
+        gap: 0.2rem !important;
         justify-content: center !important;
-        padding: 0.3rem !important;
+        padding: 0.25rem !important;
+        overflow-x: auto !important;
     }
 
     #header nav ul li {
         width: auto !important;
-        flex: 1 !important;
-        min-width: 90px !important;
+        flex: 0 0 auto !important;
+        min-width: 65px !important;
         border: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
 
     #header nav ul li a {
-        padding: 0.6rem 0.4rem !important;
-        font-size: 0.65rem !important;
+        padding: 0.5rem 0.4rem !important;
+        font-size: 0.6rem !important;
         min-width: auto !important;
+        letter-spacing: 0.05rem !important;
+    }
+}
+
+/* Very small screens - Stack vertically */
+@media screen and (max-width: 360px) {
+    #header nav ul {
+        max-width: 240px !important;
+        gap: 0.2rem !important;
+        padding: 0.25rem !important;
+    }
+
+    #header nav ul li a {
+        padding: 0.6rem !important;
+        font-size: 0.6rem !important;
     }
 }
 
