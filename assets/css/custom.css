@@ -1,11 +1,18 @@
 /* Custom Styles for Professional Portfolio */
 
 /* Header Enhancements */
+#header .content .inner {
+    padding: 3rem 2rem !important;
+    max-width: 100% !important;
+}
+
 .subtitle {
     font-size: 0.9em;
     color: rgba(255, 255, 255, 0.7);
     margin-top: 0.5rem;
     font-style: italic;
+    text-transform: none !important;
+    letter-spacing: 0.05rem;
 }
 
 .social-icons {
@@ -13,6 +20,13 @@
     justify-content: center;
     gap: 1rem;
     margin: 1.5rem 0;
+    list-style: none !important;
+    padding: 0 !important;
+}
+
+.social-icons li {
+    padding: 0 !important;
+    border: none !important;
 }
 
 .social-icons li a {
@@ -24,11 +38,15 @@
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff !important;
+    text-decoration: none !important;
 }
 
 .social-icons li a:hover {
     background: rgba(255, 255, 255, 0.2);
     transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .resume-download {
@@ -36,19 +54,36 @@
 }
 
 .resume-download .button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border: none;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    border: none !important;
     padding: 0.75rem 1.5rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    color: #ffffff !important;
+    text-decoration: none !important;
+    display: inline-block;
+    border-radius: 4px;
 }
 
 .resume-download .button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
+}
+
+/* Navigation Improvements */
+#header nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#header nav ul li a {
+    min-width: 6rem !important;
+    font-size: 0.75rem !important;
+    padding: 0 1rem !important;
 }
 
 /* Experience Section */
@@ -230,6 +265,8 @@
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     transition: all 0.3s ease;
+    color: #ffffff !important;
+    text-decoration: none !important;
 }
 
 .project-links a:hover {
@@ -422,6 +459,7 @@
 .contact-item a {
     color: #ffffff;
     font-weight: 600;
+    text-decoration: none !important;
 }
 
 .contact-item a:hover {
@@ -478,6 +516,22 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
+/* Image handling */
+.image.main {
+    margin: 0 0 2rem 0;
+}
+
+.image.main img {
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer Enhancement */
+#footer .copyright {
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.8rem;
+}
+
 /* Responsive Design */
 @media screen and (max-width: 768px) {
     .project-header {
@@ -509,6 +563,43 @@
 
     .coursework ul {
         grid-template-columns: 1fr;
+    }
+
+    #header nav ul {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    #header nav ul li {
+        border-left: none !important;
+        border-top: solid 1px #ffffff;
+        width: 100%;
+    }
+
+    #header nav ul li:first-child {
+        border-top: none !important;
+    }
+
+    #header nav ul li a {
+        min-width: auto !important;
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #header .content .inner {
+        padding: 2rem 1.5rem !important;
+    }
+
+    .resume-download .button {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.75rem;
+    }
+
+    .social-icons li a {
+        width: 2rem;
+        height: 2rem;
     }
 }
 
