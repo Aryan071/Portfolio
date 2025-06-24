@@ -55,15 +55,47 @@
 
 	// Fix for social icon links - ensure they work properly
 	$(document).ready(function () {
-		// Handle social icon links separately
-		$('.social-icons a').on('click', function (e) {
+		// Handle social icon links separately - ENHANCED VERSION
+		$('.social-icons a, .icons a').on('click', function (e) {
 			var href = $(this).attr('href');
+			var $this = $(this);
 
 			// Check if it's an external link (mailto, tel, http, https)
 			if (href && (href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('http://') || href.startsWith('https://'))) {
-				// Don't prevent default - let the browser handle it
-				e.stopPropagation(); // Prevent event bubbling
+				// Stop all event propagation immediately
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+
+				// For mailto and tel links, open them directly
+				if (href.startsWith('mailto:') || href.startsWith('tel:')) {
+					window.location.href = href;
+					return false;
+				}
+
+				// For external links, open in new tab
+				if (href.startsWith('http://') || href.startsWith('https://')) {
+					window.open(href, '_blank');
+					return false;
+				}
+
 				return true;
+			}
+		});
+
+		// Additional safety - prevent navigation from interfering with social icons
+		$(document).on('click', '.social-icons a, .icons a', function (e) {
+			var href = $(this).attr('href');
+			if (href && (href.startsWith('mailto:') || href.startsWith('tel:'))) {
+				e.preventDefault();
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+
+				// Force the link to work
+				setTimeout(function () {
+					window.location.href = href;
+				}, 10);
+
+				return false;
 			}
 		});
 	});
