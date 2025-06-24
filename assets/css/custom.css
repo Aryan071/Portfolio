@@ -26,7 +26,6 @@
     letter-spacing: 0.05rem;
 }
 
-/* SOCIAL ICONS - ULTIMATE FIX */
 .social-icons {
     display: flex;
     justify-content: center;
@@ -34,57 +33,31 @@
     margin: 1.5rem 0;
     list-style: none !important;
     padding: 0 !important;
-    pointer-events: auto !important;
-    z-index: 99999 !important;
-    position: relative !important;
 }
 
 .social-icons li {
     padding: 0 !important;
     border: none !important;
-    pointer-events: auto !important;
-    z-index: 99999 !important;
-    position: relative !important;
 }
 
 .social-icons li a {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 50% !important;
-    transition: all 0.3s ease !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     color: #ffffff !important;
     text-decoration: none !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 99999 !important;
-    position: relative !important;
-    user-select: none !important;
 }
 
 .social-icons li a:hover {
-    background: rgba(255, 255, 255, 0.2) !important;
-    transform: translateY(-2px) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    pointer-events: auto !important;
-    cursor: pointer !important;
-}
-
-/* Ensure social icons are clickable */
-.social-icons * {
-    pointer-events: auto !important;
-    z-index: 99999 !important;
-}
-
-/* Override any theme styles that might interfere */
-.icons li a {
-    pointer-events: auto !important;
-    cursor: pointer !important;
-    z-index: 99999 !important;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .resume-download {
