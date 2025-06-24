@@ -217,19 +217,20 @@ nav.use-middle:before,
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    border: none !important;
-    border-radius: 0 !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border-radius: 8px !important;
     background: none !important;
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    gap: 0.5rem !important;
+    gap: 0 !important;
+    overflow: hidden !important;
 }
 
 #header nav ul li {
     border: none !important;
     border-left: none !important;
-    border-right: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
     border-top: none !important;
     border-bottom: none !important;
     background: none !important;
@@ -237,24 +238,21 @@ nav.use-middle:before,
     padding: 0 !important;
     display: inline-block !important;
     position: relative !important;
+    flex: 1 !important;
 }
 
-#header nav ul li:first-child,
-#header nav ul li:last-child,
-#header nav ul li.is-middle {
-    border: none !important;
-    border-left: none !important;
+#header nav ul li:last-child {
     border-right: none !important;
 }
 
 #header nav ul li a {
     display: block !important;
     min-width: auto !important;
-    width: auto !important;
+    width: 100% !important;
     height: auto !important;
     line-height: normal !important;
     padding: 0.75rem 1.25rem !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border: none !important;
     border-bottom: none !important;
     text-align: center !important;
     background: rgba(255, 255, 255, 0.08) !important;
@@ -269,16 +267,11 @@ nav.use-middle:before,
 }
 
 #header nav ul li:first-child a {
-    border-radius: 6px 0 0 6px !important;
+    border-radius: 7px 0 0 7px !important;
 }
 
 #header nav ul li:last-child a {
-    border-radius: 0 6px 6px 0 !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
-}
-
-#header nav ul li:not(:first-child) a {
-    border-left: none !important;
+    border-radius: 0 7px 7px 0 !important;
 }
 
 #header nav ul li a:hover {
@@ -286,7 +279,8 @@ nav.use-middle:before,
     transform: translateY(-2px) !important;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
     color: #ffffff !important;
-    border-color: rgba(255, 255, 255, 0.5) !important;
+    z-index: 10 !important;
+    position: relative !important;
 }
 
 #header nav ul li a:active,
@@ -294,7 +288,6 @@ nav.use-middle:before,
     background: linear-gradient(135deg, #667eea, #764ba2) !important;
     color: #ffffff !important;
     transform: translateY(0) !important;
-    border-color: #667eea !important;
 }
 
 /* Remove any pseudo-elements that might create lines */
