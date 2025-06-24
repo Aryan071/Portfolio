@@ -1,44 +1,5 @@
 /* Custom Styles for Professional Portfolio */
 
-/* MAKE HOME PAGE NON-SCROLLABLE - SIMPLE AND EFFECTIVE */
-html,
-body {
-    overflow: hidden !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
-}
-
-#wrapper {
-    overflow: hidden !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
-}
-
-/* Remove overflow hidden from header to show content */
-#header {
-    /* overflow: hidden !important; - REMOVED */
-}
-
-/* Only allow scrolling when article is visible */
-body.is-article-visible {
-    overflow: auto !important;
-}
-
-body.is-article-visible html {
-    overflow: auto !important;
-}
-
-body.is-article-visible #wrapper {
-    overflow: auto !important;
-    height: auto !important;
-    max-height: none !important;
-}
-
-body.is-article-visible #main {
-    overflow-y: auto !important;
-    max-height: 100vh !important;
-}
-
 /* REMOVE CIRCLE ABOVE NAME */
 #header .logo {
     display: none !important;
