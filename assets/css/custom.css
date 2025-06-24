@@ -1,5 +1,115 @@
 /* Custom Styles for Professional Portfolio */
 
+/* Professional Font Enhancements */
+body {
+    font-family: "Inter", "Poppins", "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+    font-weight: 400;
+    font-feature-settings: "kern" 1, "liga" 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Heading Font Improvements */
+h1 {
+    font-family: "Poppins", "Inter", sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 2.5rem !important;
+    letter-spacing: 0.1rem !important;
+    line-height: 1.2 !important;
+}
+
+h2.major {
+    font-family: "Poppins", "Inter", sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.8rem !important;
+    letter-spacing: 0.15rem !important;
+}
+
+h3 {
+    font-family: "Poppins", "Inter", sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 1.4rem !important;
+    letter-spacing: 0.1rem !important;
+}
+
+h4 {
+    font-family: "Inter", "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    font-size: 1.2rem !important;
+    letter-spacing: 0.05rem !important;
+}
+
+/* Professional paragraph styling */
+p {
+    font-family: "Inter", "Roboto", sans-serif !important;
+    font-weight: 400 !important;
+    line-height: 1.7 !important;
+    font-size: 1rem !important;
+}
+
+/* Navigation font styling */
+#header nav ul li a {
+    font-family: "Inter", "Poppins", sans-serif !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.1rem !important;
+    text-transform: uppercase !important;
+}
+
+/* Professional subtitle styling */
+.subtitle {
+    font-family: "Inter", "Roboto", sans-serif !important;
+    font-weight: 300 !important;
+    font-style: normal !important;
+    letter-spacing: 0.05rem !important;
+}
+
+/* Button font styling */
+.button,
+input[type="submit"],
+button {
+    font-family: "Inter", "Poppins", sans-serif !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.1rem !important;
+}
+
+/* Professional list styling */
+ul li,
+ol li {
+    font-family: "Inter", "Roboto", sans-serif !important;
+    font-weight: 400 !important;
+    line-height: 1.6 !important;
+}
+
+/* Tech stack and tags font styling */
+.tech-stack,
+.skill-tag {
+    font-family: "Inter", sans-serif !important;
+    font-weight: 500 !important;
+}
+
+/* Company and institution names */
+.company,
+.institution {
+    font-family: "Poppins", "Inter", sans-serif !important;
+    font-weight: 600 !important;
+}
+
+/* Duration and location styling */
+.duration,
+.location {
+    font-family: "Inter", sans-serif !important;
+    font-weight: 400 !important;
+    font-style: italic;
+}
+
+/* Professional emphasis for strong text */
+strong,
+b {
+    font-family: "Inter", "Poppins", sans-serif !important;
+    font-weight: 600 !important;
+}
+
 /* REMOVE CIRCLE ABOVE NAME */
 #header .logo {
     display: none !important;
