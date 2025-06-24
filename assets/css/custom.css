@@ -14,8 +14,9 @@ body {
     max-height: 100vh !important;
 }
 
+/* Remove overflow hidden from header to show content */
 #header {
-    overflow: hidden !important;
+    /* overflow: hidden !important; - REMOVED */
 }
 
 /* Only allow scrolling when article is visible */
