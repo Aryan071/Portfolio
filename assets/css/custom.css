@@ -1,0 +1,569 @@
+/* Custom Styles for Professional Portfolio */
+
+/* Header Enhancements */
+.subtitle {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.5rem;
+    font-style: italic;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.social-icons li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.social-icons li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.resume-download {
+    margin-top: 1.5rem;
+}
+
+.resume-download .button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.resume-download .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Experience Section */
+.experience-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid #667eea;
+}
+
+.experience-header {
+    margin-bottom: 1rem;
+}
+
+.experience-header h3 {
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.company {
+    font-weight: 600;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.duration {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9em;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.location {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85em;
+    display: block;
+}
+
+.tech-stack {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.75rem;
+    border-radius: 5px;
+    margin: 1rem 0;
+    font-size: 0.9em;
+}
+
+.project-section h4 {
+    color: #764ba2;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-section ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+/* Skills Section */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.skill-category {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 3px solid #667eea;
+}
+
+.skill-category h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.skill-tag {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.85em;
+    border: 1px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.skill-tag.expert {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.skill-tag.advanced {
+    background: rgba(102, 126, 234, 0.3);
+    border-color: #667eea;
+}
+
+.skill-tag.intermediate {
+    background: rgba(118, 75, 162, 0.3);
+    border-color: #764ba2;
+}
+
+.skill-tag.beginner {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.skill-tag:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.soft-skills {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 3px solid #764ba2;
+}
+
+.soft-skills h3 {
+    color: #764ba2;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Projects Section */
+.project-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid #764ba2;
+    transition: all 0.3s ease;
+}
+
+.project-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.project-header h3 {
+    color: #764ba2;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.project-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.project-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.project-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.project-description {
+    margin-top: 1rem;
+}
+
+.project-achievements h4 {
+    color: #667eea;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.project-achievements ul li {
+    margin-bottom: 0.5rem;
+    line-height: 1.5;
+}
+
+/* Education Section */
+.education-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid #667eea;
+}
+
+.education-header h3 {
+    color: #667eea;
+    margin-bottom: 0.5rem;
+}
+
+.institution {
+    font-weight: 600;
+    color: #ffffff;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.coursework {
+    margin-top: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.coursework h4 {
+    color: #764ba2;
+    margin-bottom: 0.5rem;
+}
+
+.coursework ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.5rem;
+}
+
+.coursework ul li {
+    font-size: 0.9em;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Certifications Section */
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cert-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 3px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.cert-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cert-item h3 {
+    color: #667eea;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.1em;
+}
+
+.cert-status {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.learning-goals {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 3px solid #764ba2;
+}
+
+.learning-goals h3 {
+    color: #764ba2;
+    margin-bottom: 1rem;
+}
+
+.learning-goals ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+/* Achievements Section */
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.achievement-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid #667eea;
+}
+
+.achievement-item:nth-child(even) {
+    border-left-color: #764ba2;
+}
+
+.achievement-item h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.achievement-item:nth-child(even) h3 {
+    color: #764ba2;
+}
+
+.achievement-item ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+}
+
+/* Contact Section */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.contact-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.contact-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.contact-item h3 {
+    color: #667eea;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.contact-item a {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.contact-item a:hover {
+    color: #667eea;
+}
+
+.availability {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 3px solid #667eea;
+    margin-bottom: 1.5rem;
+}
+
+.availability h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.availability ul li {
+    margin-bottom: 0.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.response-time {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* About Section Enhancements */
+.highlights {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-top: 3px solid #667eea;
+    margin-top: 2rem;
+}
+
+.highlights h3 {
+    color: #667eea;
+    margin-bottom: 1rem;
+}
+
+.highlights ul li {
+    margin-bottom: 0.75rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .project-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .achievements-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .social-icons {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .coursework ul {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation Enhancements */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.experience-item,
+.project-item,
+.education-item,
+.achievement-item,
+.cert-item {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #764ba2, #667eea);
+}
+
+/* Print Styles */
+@media print {
+
+    .social-icons,
+    .resume-download,
+    .project-links {
+        display: none;
+    }
+
+    .experience-item,
+    .project-item,
+    .education-item {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+}
