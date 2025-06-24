@@ -121,20 +121,33 @@
     }
 }
 
-/* Navigation Complete Fix */
+/* Header Content Border Override */
+#header .content {
+    border: none !important;
+    border-top: none !important;
+    border-bottom: none !important;
+    border-style: none !important;
+    border-color: transparent !important;
+    border-width: 0 !important;
+}
+
+/* Complete Navigation Override - Remove All Borders and Lines */
 #header nav {
     border: none !important;
     background: none !important;
 }
 
 #header nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
     border: none !important;
+    border-radius: 0 !important;
     background: none !important;
     list-style: none !important;
     margin: 0 !important;
     padding: 0 !important;
+    gap: 0.5rem !important;
 }
 
 #header nav ul li {
@@ -146,105 +159,192 @@
     background: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    display: inline-block;
+    display: inline-block !important;
+    position: relative !important;
 }
 
 #header nav ul li:first-child {
     border: none !important;
+    border-left: none !important;
 }
 
 #header nav ul li:last-child {
     border: none !important;
+    border-right: none !important;
 }
 
 #header nav ul li a {
-    min-width: 6rem !important;
-    font-size: 0.75rem !important;
-    padding: 1rem !important;
+    display: block !important;
+    min-width: auto !important;
+    width: auto !important;
+    height: auto !important;
+    line-height: normal !important;
+    padding: 0.75rem 1.25rem !important;
     border: none !important;
-    display: block;
-    text-align: center;
-    background: rgba(255, 255, 255, 0.05) !important;
-    margin: 0.25rem !important;
-    border-radius: 4px !important;
+    border-bottom: none !important;
+    text-align: center !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-radius: 6px !important;
     transition: all 0.3s ease !important;
     color: #ffffff !important;
     text-decoration: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.1rem !important;
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
 }
 
 #header nav ul li a:hover {
     background: rgba(255, 255, 255, 0.15) !important;
     transform: translateY(-2px) !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    color: #ffffff !important;
 }
 
 #header nav ul li a:active,
 #header nav ul li a.active {
     background: linear-gradient(135deg, #667eea, #764ba2) !important;
     color: #ffffff !important;
+    transform: translateY(0) !important;
 }
 
-/* Enhanced Mobile Navigation */
+/* Remove any pseudo-elements that might create lines */
+#header nav:before,
+#header nav:after,
+#header nav ul:before,
+#header nav ul:after,
+#header nav ul li:before,
+#header nav ul li:after {
+    display: none !important;
+    content: none !important;
+}
+
+/* Override middle navigation line */
+#header nav.use-middle:after {
+    display: none !important;
+    content: none !important;
+}
+
+#header nav.use-middle ul li.is-middle {
+    border-left: none !important;
+}
+
+/* Enhanced Mobile Navigation - Clean Version */
 @media screen and (max-width: 980px) {
     #header nav ul {
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 100%;
-        justify-content: center;
-        gap: 0.25rem;
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        width: 100% !important;
+        justify-content: center !important;
+        gap: 0.375rem !important;
+        max-width: 600px !important;
+        margin: 0 auto !important;
     }
 
     #header nav ul li {
         border: none !important;
-        width: auto;
-        flex: 0 0 auto;
-        margin: 0 !important;
-    }
-
-    #header nav ul li a {
-        min-width: 4.5rem !important;
-        font-size: 0.7rem !important;
-        padding: 0.75rem 0.5rem !important;
-        margin: 0.125rem !important;
-    }
-}
-
-@media screen and (max-width: 768px) {
-    #header nav ul {
-        flex-direction: column;
-        width: 100%;
-        max-width: 280px;
-        margin: 0 auto;
-        gap: 0.5rem;
-    }
-
-    #header nav ul li {
-        border: none !important;
-        width: 100%;
+        width: auto !important;
+        flex: 0 0 auto !important;
         margin: 0 !important;
     }
 
     #header nav ul li a {
         min-width: auto !important;
-        width: 100%;
-        text-align: center;
+        padding: 0.6rem 1rem !important;
+        font-size: 0.7rem !important;
+        border-radius: 4px !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #header nav ul {
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 300px !important;
+        margin: 0 auto !important;
+        gap: 0.5rem !important;
+    }
+
+    #header nav ul li {
+        border: none !important;
+        border-top: none !important;
+        width: 100% !important;
+        margin: 0 !important;
+    }
+
+    #header nav ul li:first-child {
+        border-top: none !important;
+    }
+
+    #header nav ul li a {
+        min-width: auto !important;
+        width: 100% !important;
+        height: auto !important;
+        line-height: normal !important;
+        text-align: center !important;
         padding: 1rem !important;
         font-size: 0.8rem !important;
-        margin: 0 !important;
-        border-radius: 6px !important;
+        border-radius: 8px !important;
     }
 }
 
 @media screen and (max-width: 480px) {
     #header nav ul {
-        max-width: 260px;
-        gap: 0.375rem;
+        flex-direction: column !important;
+        min-width: auto !important;
+        max-width: 280px !important;
+        gap: 0.375rem !important;
+    }
+
+    #header nav ul li {
+        border: none !important;
+        border-left: none !important;
+        border-top: none !important;
+    }
+
+    #header nav ul li:first-child {
+        border-top: none !important;
     }
 
     #header nav ul li a {
+        height: auto !important;
+        line-height: normal !important;
+        min-width: 0 !important;
+        width: 100% !important;
         padding: 0.875rem !important;
         font-size: 0.75rem !important;
         border-radius: 8px !important;
+    }
+}
+
+/* Landscape mobile optimization - Clean Version */
+@media screen and (max-width: 736px) and (orientation: landscape) {
+    #header nav ul {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        max-width: none !important;
+        gap: 0.25rem !important;
+        justify-content: center !important;
+    }
+
+    #header nav ul li {
+        width: auto !important;
+        flex: 1 !important;
+        min-width: 90px !important;
+        border: none !important;
+        border-left: none !important;
+        border-top: none !important;
+    }
+
+    #header nav ul li:first-child {
+        border-left: none !important;
+    }
+
+    #header nav ul li a {
+        padding: 0.6rem 0.4rem !important;
+        font-size: 0.65rem !important;
+        min-width: auto !important;
+        border-radius: 4px !important;
     }
 }
 
@@ -519,37 +619,6 @@
 
     h2.major {
         font-size: 1.35rem !important;
-    }
-}
-
-/* Landscape mobile optimization */
-@media screen and (max-width: 736px) and (orientation: landscape) {
-    #header nav ul {
-        flex-direction: row;
-        flex-wrap: wrap;
-        max-width: none;
-        gap: 0.25rem;
-    }
-
-    #header nav ul li {
-        width: auto;
-        flex: 1;
-        min-width: 80px;
-    }
-
-    #header nav ul li a {
-        padding: 0.6rem 0.3rem !important;
-        font-size: 0.65rem !important;
-        min-width: auto !important;
-    }
-
-    #header .content .inner {
-        padding: 1.5rem 2rem !important;
-    }
-
-    .resume-download .button {
-        padding: 0.7rem 1.3rem;
-        font-size: 0.75rem;
     }
 }
 
