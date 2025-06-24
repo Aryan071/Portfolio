@@ -206,7 +206,7 @@ nav.use-middle:before,
     height: 0 !important;
 }
 
-/* Complete Navigation Override - Remove All Borders and Lines */
+/* Complete Navigation Override - Individual and Overall Borders */
 #header nav {
     border: none !important;
     background: none !important;
@@ -217,32 +217,33 @@ nav.use-middle:before,
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
-    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    border: 2px solid rgba(255, 255, 255, 0.4) !important;
     border-radius: 8px !important;
-    background: none !important;
+    background: rgba(255, 255, 255, 0.05) !important;
     list-style: none !important;
     margin: 0 !important;
-    padding: 0 !important;
-    gap: 0 !important;
-    overflow: hidden !important;
+    padding: 0.5rem !important;
+    gap: 0.5rem !important;
+    overflow: visible !important;
 }
 
 #header nav ul li {
-    border: none !important;
-    border-left: none !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.3) !important;
-    border-top: none !important;
-    border-bottom: none !important;
-    background: none !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    background: rgba(255, 255, 255, 0.08) !important;
     margin: 0 !important;
     padding: 0 !important;
     display: inline-block !important;
     position: relative !important;
     flex: 1 !important;
+    border-radius: 4px !important;
+    transition: all 0.3s ease !important;
 }
 
-#header nav ul li:last-child {
-    border-right: none !important;
+#header nav ul li:hover {
+    border-color: rgba(255, 255, 255, 0.6) !important;
+    background: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
 }
 
 #header nav ul li a {
@@ -251,12 +252,11 @@ nav.use-middle:before,
     width: 100% !important;
     height: auto !important;
     line-height: normal !important;
-    padding: 0.75rem 1.25rem !important;
+    padding: 0.75rem 1rem !important;
     border: none !important;
-    border-bottom: none !important;
     text-align: center !important;
-    background: rgba(255, 255, 255, 0.08) !important;
-    border-radius: 0 !important;
+    background: transparent !important;
+    border-radius: 4px !important;
     transition: all 0.3s ease !important;
     color: #ffffff !important;
     text-decoration: none !important;
@@ -266,28 +266,15 @@ nav.use-middle:before,
     font-weight: 600 !important;
 }
 
-#header nav ul li:first-child a {
-    border-radius: 7px 0 0 7px !important;
-}
-
-#header nav ul li:last-child a {
-    border-radius: 0 7px 7px 0 !important;
-}
-
 #header nav ul li a:hover {
-    background: rgba(255, 255, 255, 0.15) !important;
-    transform: translateY(-2px) !important;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    background: rgba(255, 255, 255, 0.1) !important;
     color: #ffffff !important;
-    z-index: 10 !important;
-    position: relative !important;
 }
 
 #header nav ul li a:active,
 #header nav ul li a.active {
     background: linear-gradient(135deg, #667eea, #764ba2) !important;
     color: #ffffff !important;
-    transform: translateY(0) !important;
 }
 
 /* Remove any pseudo-elements that might create lines */
@@ -311,30 +298,31 @@ nav.use-middle:before,
     border-left: none !important;
 }
 
-/* Enhanced Mobile Navigation - Clean Version */
+/* Enhanced Mobile Navigation - Bordered Version */
 @media screen and (max-width: 980px) {
     #header nav ul {
         flex-direction: row !important;
         flex-wrap: wrap !important;
         width: 100% !important;
         justify-content: center !important;
-        gap: 0.375rem !important;
+        gap: 0.4rem !important;
         max-width: 600px !important;
         margin: 0 auto !important;
+        padding: 0.4rem !important;
     }
 
     #header nav ul li {
-        border: none !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
         width: auto !important;
         flex: 0 0 auto !important;
         margin: 0 !important;
+        min-width: 80px !important;
     }
 
     #header nav ul li a {
         min-width: auto !important;
-        padding: 0.6rem 1rem !important;
+        padding: 0.6rem 0.8rem !important;
         font-size: 0.7rem !important;
-        border-radius: 4px !important;
     }
 }
 
@@ -344,18 +332,15 @@ nav.use-middle:before,
         width: 100% !important;
         max-width: 300px !important;
         margin: 0 auto !important;
-        gap: 0.5rem !important;
+        gap: 0.4rem !important;
+        padding: 0.5rem !important;
     }
 
     #header nav ul li {
-        border: none !important;
-        border-top: none !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
         width: 100% !important;
         margin: 0 !important;
-    }
-
-    #header nav ul li:first-child {
-        border-top: none !important;
+        flex: none !important;
     }
 
     #header nav ul li a {
@@ -366,7 +351,6 @@ nav.use-middle:before,
         text-align: center !important;
         padding: 1rem !important;
         font-size: 0.8rem !important;
-        border-radius: 8px !important;
     }
 }
 
@@ -375,17 +359,12 @@ nav.use-middle:before,
         flex-direction: column !important;
         min-width: auto !important;
         max-width: 280px !important;
-        gap: 0.375rem !important;
+        gap: 0.3rem !important;
+        padding: 0.4rem !important;
     }
 
     #header nav ul li {
-        border: none !important;
-        border-left: none !important;
-        border-top: none !important;
-    }
-
-    #header nav ul li:first-child {
-        border-top: none !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
 
     #header nav ul li a {
@@ -395,11 +374,10 @@ nav.use-middle:before,
         width: 100% !important;
         padding: 0.875rem !important;
         font-size: 0.75rem !important;
-        border-radius: 8px !important;
     }
 }
 
-/* Landscape mobile optimization - Clean Version */
+/* Landscape mobile optimization - Bordered Version */
 @media screen and (max-width: 736px) and (orientation: landscape) {
     #header nav ul {
         flex-direction: row !important;
@@ -407,26 +385,20 @@ nav.use-middle:before,
         max-width: none !important;
         gap: 0.25rem !important;
         justify-content: center !important;
+        padding: 0.3rem !important;
     }
 
     #header nav ul li {
         width: auto !important;
         flex: 1 !important;
         min-width: 90px !important;
-        border: none !important;
-        border-left: none !important;
-        border-top: none !important;
-    }
-
-    #header nav ul li:first-child {
-        border-left: none !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
     }
 
     #header nav ul li a {
         padding: 0.6rem 0.4rem !important;
         font-size: 0.65rem !important;
         min-width: auto !important;
-        border-radius: 4px !important;
     }
 }
 
