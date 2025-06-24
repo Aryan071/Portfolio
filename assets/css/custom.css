@@ -121,7 +121,8 @@
     }
 }
 
-/* Header Content Border Override */
+/* COMPLETE VERTICAL LINE REMOVAL - COMPREHENSIVE FIX */
+/* Remove ALL vertical lines and borders from header and navigation */
 #header .content {
     border: none !important;
     border-top: none !important;
@@ -131,22 +132,13 @@
     border-width: 0 !important;
 }
 
-/* Remove ALL vertical lines and borders */
+/* Remove ALL pseudo-elements that might create lines */
 #header .content:before,
-#header .content:after {
-    display: none !important;
-    content: none !important;
-}
-
+#header .content:after,
 #header:before,
-#header:after {
-    display: none !important;
-    content: none !important;
-}
-
-/* Specifically target the middle vertical line */
-#header nav.use-middle:before,
-#header nav.use-middle:after {
+#header:after,
+#wrapper:before,
+#wrapper:after {
     display: none !important;
     content: none !important;
     background: none !important;
@@ -154,17 +146,60 @@
     height: 0 !important;
 }
 
-/* Remove any wrapper lines */
-#wrapper:before,
-#wrapper:after {
+/* NAVIGATION VERTICAL LINE REMOVAL - ULTIMATE FIX */
+/* Target all possible navigation pseudo-elements */
+#header nav:before,
+#header nav:after,
+#header nav ul:before,
+#header nav ul:after,
+#header nav ul li:before,
+#header nav ul li:after {
     display: none !important;
     content: none !important;
+    background: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Specifically target the middle navigation line - ALL VARIATIONS */
+#header nav.use-middle:before,
+#header nav.use-middle:after {
+    display: none !important;
+    content: none !important;
+    background: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    position: static !important;
+}
+
+/* Force override any dynamically added middle line */
+nav.use-middle:after,
+nav.use-middle:before,
+.use-middle:after,
+.use-middle:before {
+    display: none !important;
+    content: none !important;
+    background: transparent !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+}
+
+/* Additional safety overrides for any remaining vertical elements */
+#header nav *:before,
+#header nav *:after {
+    background: transparent !important;
+    border: none !important;
+    width: 0 !important;
+    height: 0 !important;
 }
 
 /* Complete Navigation Override - Remove All Borders and Lines */
 #header nav {
     border: none !important;
     background: none !important;
+    position: relative !important;
 }
 
 #header nav ul {
@@ -193,13 +228,11 @@
     position: relative !important;
 }
 
-#header nav ul li:first-child {
+#header nav ul li:first-child,
+#header nav ul li:last-child,
+#header nav ul li.is-middle {
     border: none !important;
     border-left: none !important;
-}
-
-#header nav ul li:last-child {
-    border: none !important;
     border-right: none !important;
 }
 
@@ -1161,4 +1194,59 @@
 
 .education-details {
     margin-bottom: 0;
+}
+
+/* FINAL ABSOLUTE OVERRIDE - REMOVE VERTICAL LINE COMPLETELY */
+/* This is the ultimate fix to remove the middle vertical line */
+#header nav.use-middle:after,
+#header nav.use-middle::after,
+nav.use-middle:after,
+nav.use-middle::after {
+    display: none !important;
+    content: none !important;
+    background: transparent !important;
+    background-color: transparent !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    top: -9999px !important;
+}
+
+/* Force hide any pseudo-element that might create a line */
+#header nav *::before,
+#header nav *::after,
+#header nav *:before,
+#header nav *:after {
+    content: none !important;
+    display: none !important;
+    background: transparent !important;
+    border: none !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+/* Ensure no borders on navigation items */
+#header nav ul li {
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-top: 0 !important;
+    border-bottom: 0 !important;
+    border: 0 !important;
+}
+
+/* Override any theme-specific middle line styles */
+.use-middle::after,
+.use-middle::before,
+.use-middle:after,
+.use-middle:before {
+    content: "" !important;
+    display: none !important;
+    background: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
