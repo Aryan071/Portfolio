@@ -1,168 +1,36 @@
 /* Custom Styles for Professional Portfolio */
 
-/* MAKE HOME PAGE NON-SCROLLABLE - ENHANCED FOR ALL ZOOM LEVELS */
+/* MAKE HOME PAGE NON-SCROLLABLE - SIMPLE AND EFFECTIVE */
 html,
 body {
     overflow: hidden !important;
     height: 100vh !important;
     max-height: 100vh !important;
-    min-height: 100vh !important;
-    position: fixed !important;
-    width: 100% !important;
-    top: 0 !important;
-    left: 0 !important;
 }
 
 #wrapper {
     overflow: hidden !important;
     height: 100vh !important;
     max-height: 100vh !important;
-    min-height: 100vh !important;
-    position: fixed !important;
-    width: 100% !important;
-    top: 0 !important;
-    left: 0 !important;
 }
 
 #header {
     overflow: hidden !important;
-    height: 100vh !important;
-    max-height: 100vh !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-    position: relative !important;
-}
-
-/* Ensure content fits within viewport at all zoom levels */
-#header .content {
-    max-height: 85vh !important;
-    overflow: hidden !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-}
-
-#header .content .inner {
-    padding: 2rem 1.5rem !important;
-    max-width: 100% !important;
-    text-align: center !important;
-    overflow: hidden !important;
-    max-height: 70vh !important;
-}
-
-/* Adjust navigation to fit within remaining space */
-#header nav {
-    position: absolute !important;
-    bottom: 2rem !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    width: auto !important;
-    max-width: 95% !important;
-    overflow: hidden !important;
-}
-
-/* Scale down content at higher zoom levels */
-@media screen and (max-width: 1400px) {
-    #header .content .inner {
-        padding: 1.5rem 1rem !important;
-        max-height: 65vh !important;
-    }
-
-    h1 {
-        font-size: 2.5rem !important;
-        margin-bottom: 0.5rem !important;
-    }
-
-    .subtitle {
-        font-size: 0.85em !important;
-    }
-
-    .social-icons {
-        margin: 1rem 0 !important;
-        gap: 0.75rem !important;
-    }
-
-    .social-icons li a {
-        width: 2.25rem !important;
-        height: 2.25rem !important;
-    }
-
-    .resume-download .button {
-        padding: 0.8rem 1.5rem !important;
-        font-size: 0.8rem !important;
-    }
-}
-
-@media screen and (max-width: 1200px) {
-    #header .content .inner {
-        padding: 1.25rem 1rem !important;
-        max-height: 60vh !important;
-    }
-
-    h1 {
-        font-size: 2.2rem !important;
-        margin-bottom: 0.4rem !important;
-    }
-
-    .subtitle {
-        font-size: 0.8em !important;
-        margin-top: 0.4rem !important;
-    }
-
-    .social-icons {
-        margin: 0.8rem 0 !important;
-        gap: 0.6rem !important;
-    }
-
-    .social-icons li a {
-        width: 2rem !important;
-        height: 2rem !important;
-    }
-
-    .resume-download .button {
-        padding: 0.7rem 1.25rem !important;
-        font-size: 0.75rem !important;
-        min-width: 160px !important;
-    }
-
-    #header nav {
-        bottom: 1.5rem !important;
-    }
 }
 
 /* Only allow scrolling when article is visible */
 body.is-article-visible {
     overflow: auto !important;
-    position: static !important;
-    height: auto !important;
-    max-height: none !important;
-    min-height: auto !important;
 }
 
 body.is-article-visible html {
     overflow: auto !important;
-    position: static !important;
-    height: auto !important;
-    max-height: none !important;
-    min-height: auto !important;
 }
 
 body.is-article-visible #wrapper {
     overflow: auto !important;
     height: auto !important;
     max-height: none !important;
-    min-height: auto !important;
-    position: static !important;
-}
-
-body.is-article-visible #header {
-    height: auto !important;
-    max-height: none !important;
-    display: block !important;
-    position: static !important;
 }
 
 body.is-article-visible #main {
@@ -182,6 +50,11 @@ body.is-article-visible #main {
 }
 
 /* Header Enhancements */
+#header .content .inner {
+    padding: 3rem 2rem !important;
+    max-width: 100% !important;
+}
+
 .subtitle {
     font-size: 0.9em;
     color: rgba(255, 255, 255, 0.7);
