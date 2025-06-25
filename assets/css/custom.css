@@ -1304,12 +1304,62 @@ nav.use-middle:before,
 
 /* Image handling */
 .image.main {
-    margin: 0 0 2rem 0;
+    margin: 0 auto 2rem auto;
+    max-width: 350px;
+    width: 100%;
+    text-align: center;
 }
 
 .image.main img {
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    width: 100%;
+    height: auto;
+    max-width: 350px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.image.main img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* Responsive image sizing */
+@media screen and (max-width: 768px) {
+    .image.main {
+        max-width: 280px;
+        margin: 0 auto 1.5rem auto;
+    }
+
+    .image.main img {
+        max-width: 280px;
+        border-radius: 12px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .image.main {
+        max-width: 220px;
+        margin: 0 auto 1.25rem auto;
+    }
+
+    .image.main img {
+        max-width: 220px;
+        border-radius: 10px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .image.main {
+        max-width: 180px;
+        margin: 0 auto 1rem auto;
+    }
+
+    .image.main img {
+        max-width: 180px;
+        border-radius: 8px;
+    }
 }
 
 /* Footer Enhancement */
