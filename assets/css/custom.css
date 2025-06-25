@@ -125,6 +125,10 @@ b {
 #header .content .inner {
     padding: 3rem 2rem !important;
     max-width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .subtitle {
@@ -136,11 +140,21 @@ b {
     letter-spacing: 0.05rem;
 }
 
+.social-resume-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
 .social-icons {
     display: flex;
     justify-content: center;
-    gap: 1rem;
-    margin: 1.5rem 0;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 0;
     list-style: none !important;
     padding: 0 !important;
 }
@@ -148,52 +162,58 @@ b {
 .social-icons li {
     padding: 0 !important;
     border: none !important;
+    margin: 0 !important;
 }
 
 .social-icons li a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 3rem;
+    height: 3rem;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 50%;
     transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     color: #ffffff !important;
     text-decoration: none !important;
+    font-size: 1.2rem;
 }
 
 .social-icons li a:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-3px);
+    border-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 .resume-download {
-    margin-top: 2rem;
+    margin: 0;
     text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .resume-download .button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
     border: none !important;
-    padding: 1rem 2rem;
+    padding: 1.2rem 2.5rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.15rem;
     font-size: 0.9rem;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
     color: #ffffff !important;
     text-decoration: none !important;
     display: inline-flex;
     align-items: center;
     gap: 0.75rem;
-    border-radius: 8px;
+    border-radius: 10px;
     position: relative;
     overflow: hidden;
-    min-width: 200px;
+    min-width: 220px;
     justify-content: center;
 }
 
@@ -214,7 +234,7 @@ b {
 
 .resume-download .button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+    box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
     background: linear-gradient(135deg, #764ba2 0%, #667eea 100%) !important;
 }
 
@@ -1302,10 +1322,10 @@ nav.use-middle:before,
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* Image handling */
+/* Image handling - Make even smaller */
 .image.main {
     margin: 0 auto 2rem auto;
-    max-width: 350px;
+    max-width: 250px;
     width: 100%;
     text-align: center;
 }
@@ -1315,7 +1335,7 @@ nav.use-middle:before,
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
     width: 100%;
     height: auto;
-    max-width: 350px;
+    max-width: 250px;
     object-fit: cover;
     transition: all 0.3s ease;
 }
@@ -1325,39 +1345,39 @@ nav.use-middle:before,
     box-shadow: 0 12px 35px rgba(0, 0, 0, 0.5);
 }
 
-/* Responsive image sizing */
+/* Responsive image sizing - Smaller sizes */
 @media screen and (max-width: 768px) {
     .image.main {
-        max-width: 280px;
+        max-width: 200px;
         margin: 0 auto 1.5rem auto;
     }
 
     .image.main img {
-        max-width: 280px;
+        max-width: 200px;
         border-radius: 12px;
     }
 }
 
 @media screen and (max-width: 480px) {
     .image.main {
-        max-width: 220px;
+        max-width: 160px;
         margin: 0 auto 1.25rem auto;
     }
 
     .image.main img {
-        max-width: 220px;
+        max-width: 160px;
         border-radius: 10px;
     }
 }
 
 @media screen and (max-width: 360px) {
     .image.main {
-        max-width: 180px;
+        max-width: 140px;
         margin: 0 auto 1rem auto;
     }
 
     .image.main img {
-        max-width: 180px;
+        max-width: 140px;
         border-radius: 8px;
     }
 }
@@ -1486,4 +1506,77 @@ nav.use-middle::after {
     height: 0 !important;
     opacity: 0 !important;
     visibility: hidden !important;
+}
+
+/* Responsive homepage alignment */
+@media screen and (max-width: 768px) {
+    .social-resume-container {
+        gap: 1.25rem;
+        margin-top: 1.25rem;
+    }
+
+    .social-icons {
+        gap: 1.25rem;
+    }
+
+    .social-icons li a {
+        width: 2.75rem;
+        height: 2.75rem;
+        font-size: 1.1rem;
+    }
+
+    .resume-download .button {
+        padding: 1rem 2rem;
+        font-size: 0.85rem;
+        min-width: 200px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .social-resume-container {
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .social-icons {
+        gap: 1rem;
+    }
+
+    .social-icons li a {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: 1rem;
+        border-width: 1.5px;
+    }
+
+    .resume-download .button {
+        padding: 0.9rem 1.8rem;
+        font-size: 0.8rem;
+        min-width: 180px;
+        letter-spacing: 0.1rem;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .social-resume-container {
+        gap: 0.875rem;
+        margin-top: 0.875rem;
+    }
+
+    .social-icons {
+        gap: 0.875rem;
+    }
+
+    .social-icons li a {
+        width: 2.25rem;
+        height: 2.25rem;
+        font-size: 0.9rem;
+    }
+
+    .resume-download .button {
+        padding: 0.8rem 1.5rem;
+        font-size: 0.75rem;
+        min-width: 160px;
+        letter-spacing: 0.08rem;
+    }
 }
