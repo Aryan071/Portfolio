@@ -1,0 +1,103 @@
+Aryan Patel
+Phone:+919106028787 | Gmail:aryancpatel07@gmail.com|
+
+Linkedin | Portfolio
+
+PROFESSIONAL SUMMARY
+
+EDUCATION
+
+Software Engineer with 2+ years of experience developing full-stack
+applications with a backend focus using NodeJS, Python, and
+SQL-based databases. Adept at building scalable REST APIs, integrating
+cloud tools like AWS S3 and Druid, and tuning database performance.
+Solid experience with frontend technologies like ReactJS and JavaScript
+for building responsive UIs. Strong in Agile, Git, and CI/CD, with a
+passion for writing clean, efficient, and production-ready code.
+
+CHAROTAR UNIVERSITY OF SCIENCE AND
+TECHNOLOGY
+B.Tech in Computer Science and Engineering
+07/2019 - 04/2023 | Anand
+GPA: 8.63/10
+
+SKILLS
+LANGUAGES| C++ • JAVA • Python
+BACK END DEVELOPMENT| Express • NodeJS • JavaScript • Python
+FRONT END DEVELOPMENT| ReactJS • JavaScript • HTML • CSS
+DATA PIPELINES| S3
+DATABASES| MySQL • PostgreSQL • MongoDB • Druid
+MISCELLANEOUS|Amazon AWS • Machine learning • Apache Airflow
+• Matomo • Apache Superset • Kubernetes (CI/CD)
+SOFT SKILLS | Effective Collaboration • Initiative & Ownership • Agile
+Team Communication • Deadline-Driven Execution
+
+EXPERIENCE
+AVESTA TECHNOLOGIES PVT. LTD | ExpressJS, Druid, ReactJS,
+MySQL, S3, CI/CD, Git, REST API, Node.js
+Software Engineer I|01/2023 - Present, Ahmedabad(Gujarat)
+View.com
+●​ Developed the HolidayRentals feature for View.com, enabling
+short-term property rentals (<30 days), which led to a 20%
+increase in daily traffic and enhanced user retention.
+●​ Integrated Druid and MySQL for rental analytics, reducing
+query latency by 40% for high-traffic dashboards.
+●​ Led the effort to refactor image handling, reducing average
+image file size by 30% through optimized compression
+techniques, which improved image load time by 25%.
+●​ Performed code reviews for 15+ pull requests, and helped
+reduce average issue resolution time by 30%.
+
+INFRAVEO TECHNOLOGIES PVT. LTD|NodeJS, HTML, CSS,
+MongoDB, Git
+Software Developer Intern|04/2022 - 07/2022, Ahmedabad(Gujarat)
+TastyMeal.com
+●​ Designed a modular Node.js backend handling up to 1,000
+concurrent users, reducing server crashes by 50%.
+●​ Used MongoDB aggregation pipelines to optimize order
+filtering, reducing query execution time by 35%.
+●​ Implemented API-level caching using Redis, leading to a 40%
+boost in response speed for high-traffic endpoints.
+●​ Improved customer retention by 15% through better user flow.
+
+MRS HIGH SCHOOL
+Senior Secondary(XII), Science
+07/2017 - 04/2019 | Mehsana
+GPA: 8.25/10
+
+PERSONAL PROJECTS
+NewsInShort App | Java, Android Studio: Link
+●​ Built a lightweight Android app that pulls
+headlines from 30+ news sources, covering
+5+ categories.
+●​ Reduced network usage by 60% through
+local caching and optimized data handling.
+●​ Verified compatibility across 7 Android
+versions, ensuring stable performance on
+low-end devices.
+
+Movie Recommendation System | ReactJS,
+PYTHON: Link
+●​ Created a content-based engine using TF-IDF
+and cosine similarity to suggest from 5,000+
+titles.
+●​ Implemented a Python-based API with Flask
+to deliver real-time data updates to the
+ReactJS front end.
+●​ Boosted recommendation accuracy by 22%
+compared to simple keyword matching.
+
+COURSEWORK
+● Full Stack Development
+● Mobile App Development
+● Machine Learning with Python
+
+HONORS & AWARDS
+● Member of Computer Society of India
+● Member of IEEE Technology & Engineering
+Management Society
+
+INTERESTS
+• Programming • Social work • Reading tech articles
+
+
