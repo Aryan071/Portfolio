@@ -421,39 +421,6 @@
   });
 
 
-  /* ---------- Latest on GitHub (public API, cached, fails silently) ---------- */
-  (function () {
-    var strip = $('#ghStrip'), list = $('#ghList');
-    if (!strip || !list) return;
-    var WANT = ['Atlas', 'Tracelens', 'Knowlify'];
-    function ago(iso) {
-      var d = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 86400000));
-      return d === 0 ? 'today' : d === 1 ? 'yesterday' : d < 30 ? d + ' days ago' : Math.round(d / 30) + ' mo ago';
-    }
-    function render(repos) {
-      var rows = repos.filter(function (r) { return WANT.indexOf(r.name) > -1; });
-      if (!rows.length) return;
-      list.innerHTML = '';
-      rows.forEach(function (r) {
-        var li = document.createElement('li'), a = document.createElement('a');
-        a.href = r.html_url; a.target = '_blank'; a.rel = 'noopener';
-        var b = document.createElement('b'); b.textContent = r.name;
-        var sp = document.createElement('span');
-        sp.textContent = (r.language || 'Code') + ' \u00B7 updated ' + ago(r.pushed_at) + (r.stargazers_count ? ' \u00B7 \u2605 ' + r.stargazers_count : '');
-        a.appendChild(b); a.appendChild(sp); li.appendChild(a); list.appendChild(li);
-      });
-      strip.hidden = false;
-    }
-    try {
-      var cached = JSON.parse(sessionStorage.getItem('gh-repos') || 'null');
-      if (cached && Date.now() - cached.t < 600000) { render(cached.d); return; }
-    } catch (e) {}
-    fetch('https://api.github.com/users/Aryan071/repos?sort=pushed&per_page=30')
-      .then(function (r) { return r.ok ? r.json() : Promise.reject(); })
-      .then(function (d) { try { sessionStorage.setItem('gh-repos', JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} render(d); })
-      .catch(function () {});
-  })();
-
   /* ---------- Diagram lightbox ---------- */
   (function () {
     var ov = document.createElement('div');
