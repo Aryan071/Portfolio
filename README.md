@@ -1,6 +1,6 @@
 # Aryan Patel - Professional Portfolio Website
 
-A modern, responsive portfolio website showcasing my experience as a Software Engineer with 2+ years of experience in full-stack development.
+A modern, responsive portfolio website showcasing my experience as a Software Engineer with 3+ years of experience in full-stack development.
 
 ## 🚀 Features
 
