@@ -454,6 +454,69 @@
     });
   })();
 
+  /* ---------- Case study pop-up ---------- */
+  (function () {
+    var ov = document.createElement('div');
+    ov.className = 'cs-overlay'; ov.hidden = true;
+    ov.innerHTML = '<div class="cs-modal glass" role="dialog" aria-modal="true" aria-labelledby="csTitle">' +
+      '<button class="cs-close" type="button" aria-label="Close case study">&times;</button>' +
+      '<header class="cs-head"><p class="cs-kicker">Case study</p><h3 id="csTitle"></h3><p class="cs-sub"></p></header>' +
+      '<div class="cs-content"></div>' +
+      '<footer class="cs-foot"><div class="cs-chips"></div><a class="btn primary cs-gh" target="_blank" rel="noopener"><span>View on GitHub</span></a></footer></div>';
+    body.appendChild(ov);
+    var modal = $('.cs-modal', ov), titleEl = $('#csTitle', ov), subEl = $('.cs-sub', ov),
+        content = $('.cs-content', ov), chipsEl = $('.cs-chips', ov), gh = $('.cs-gh', ov), closeBtn = $('.cs-close', ov);
+    var lastFocus = null;
+    function open(card, details) {
+      lastFocus = document.activeElement;
+      var h3 = $('h3', card), small = h3 && $('small', h3);
+      titleEl.textContent = h3 ? h3.childNodes[0].textContent.trim() : 'Project';
+      subEl.textContent = small ? small.textContent : '';
+      content.innerHTML = '';
+      var src = $('.case-body', details).cloneNode(true);
+      $$('.dg-hint', src).forEach(function (n) { n.remove(); });
+      $$('svg.dg', src).forEach(function (n) {
+        n.removeAttribute('tabindex');
+        var m = $('marker', n);
+        if (m) { m.id = 'ar-cs'; $$('.edge', n).forEach(function (l) { l.setAttribute('marker-end', 'url(#ar-cs)'); }); }
+      });
+      content.appendChild(src);
+      chipsEl.innerHTML = '';
+      var chips = $('.chips', card);
+      if (chips) chipsEl.innerHTML = chips.innerHTML;
+      var link = $('.p-link', card);
+      gh.href = link ? link.href : 'https://github.com/Aryan071';
+      ov.hidden = false;
+      body.style.overflow = 'hidden';
+      modal.scrollTop = 0;
+      closeBtn.focus();
+    }
+    function close() {
+      if (ov.hidden) return;
+      ov.hidden = true; content.innerHTML = '';
+      body.style.overflow = '';
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', function (e) {
+      if (ov.hidden) return;
+      if (e.key === 'Escape') { close(); return; }
+      if (e.key === 'Tab') {
+        var f = $$('a[href], button, [tabindex="0"]', modal).filter(function (n) { return n.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    });
+    $$('.case').forEach(function (d) {
+      var sum = $('summary', d), card = d.closest('.project');
+      if (!sum || !card) return;
+      sum.addEventListener('click', function (e) { e.preventDefault(); open(card, d); });
+    });
+  })();
+
   /* ---------- Copy email, back to top ---------- */
   $('#copyMail').addEventListener('click', function () {
     var mail = 'aryancpatel07@gmail.com';
