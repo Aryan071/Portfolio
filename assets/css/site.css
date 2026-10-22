@@ -516,3 +516,15 @@ body.has-cursor .cur { opacity: 1; }
 .cur.down.hover .cur-ring, .cur.down.has-label .cur-ring { scale: 1.2; }
 .cursor-ripple { z-index: 397; }
 @media (prefers-reduced-motion: reduce) { .cur-ring::after { animation: none; } }
+
+/* ===== Lighter effects mode: removes the costly effects, keeps the design ===== */
+.lite #bg, .lite .noise { display: none; }
+.lite .aurora i { animation: none; }
+.lite .glass, .lite .nav, .lite .page-nav, .lite .palette-overlay, .lite .cs-overlay, .lite .dg-overlay { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+.lite .nav.glass { background: color-mix(in srgb, var(--bg-2) 92%, transparent); }
+.lite .spot::before { display: none; }
+.lite .track, .lite .sm-row { animation: none; }
+.lite .photo-ring, .lite .photo-ring img { animation: none; }
+.lite .cur-ring::after { animation: none; }
+#liteBtn[aria-pressed="true"] { background: var(--grad); color: #08090a; border-color: transparent; }
+.lite .cur, .lite .cursor-ripple { display: none; }

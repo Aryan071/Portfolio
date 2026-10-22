@@ -191,51 +191,73 @@
   });
   menu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
 
-  /* ---------- Spotlight, tilt, magnetic ---------- */
-  $$('.spot').forEach(function (el) {
-    el.addEventListener('pointermove', function (e) {
-      var r = el.getBoundingClientRect();
-      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
-    });
-  });
-
-  if (finePointer && !reduce) {
-    $$('.tilt').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var x = (e.clientX - r.left) / r.width - 0.5;
-        var y = (e.clientY - r.top) / r.height - 0.5;
-        el.style.transition = 'transform 0.08s linear';
-        el.style.transform = 'perspective(900px) rotateY(' + (x * 9).toFixed(2) + 'deg) rotateX(' + (-y * 9).toFixed(2) + 'deg) translateZ(6px)';
-      });
-      el.addEventListener('pointerleave', function () {
-        el.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)';
-        el.style.transform = '';
-      });
-    });
-    $$('.magnetic').forEach(function (el) {
-      el.addEventListener('pointermove', function (e) {
-        var r = el.getBoundingClientRect();
-        var x = (e.clientX - (r.left + r.width / 2)) * 0.25;
-        var y = (e.clientY - (r.top + r.height / 2)) * 0.35;
-        el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px)';
-      });
-      el.addEventListener('pointerleave', function () { el.style.transform = ''; });
-    });
+  /* ---------- Lighter effects mode (manual toggle + automatic on slow devices) ---------- */
+  var lite = false;
+  try { lite = localStorage.getItem('lite') === '1'; } catch (e) {}
+  var liteBtn = $('#liteBtn');
+  function setLite(on, persist, quiet) {
+    lite = on;
+    doc.classList.toggle('lite', on);
+    if (liteBtn) { liteBtn.setAttribute('aria-pressed', String(on)); liteBtn.title = on ? 'Lighter effects: on (click for full effects)' : 'Lighter effects: off (click to reduce effects)'; }
+    if (persist) { try { localStorage.setItem('lite', on ? '1' : '0'); } catch (e) {} }
+    if (on) { resetTilt(fx.tilt); resetMag(fx.mag); body.classList.remove('has-cursor', 'cursor-on'); cursorOn = false; } // lighter mode gives you the normal system cursor
+    if (!quiet) toast(on ? 'Lighter effects on: smoother scrolling' : 'Full effects on');
   }
+
+  /* ---------- Pointer effects: spotlight, tilt, magnetic (one delegated handler, once per frame) ---------- */
+  var fx = { spot: null, tilt: null, mag: null, rs: null, rt: null, rm: null, sy: 0, e: null, raf: 0 };
+  var fancy = finePointer && !reduce;
+  function resetTilt(el) { if (!el) return; el.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)'; el.style.transform = ''; }
+  function resetMag(el) { if (el) el.style.transform = ''; }
+  function fxRects() {
+    fx.sy = window.scrollY;
+    fx.rs = fx.spot && fx.spot.getBoundingClientRect();
+    fx.rt = fx.tilt && fx.tilt.getBoundingClientRect();
+    fx.rm = fx.mag && fx.mag.getBoundingClientRect();
+  }
+  document.addEventListener('pointerover', function (e) {
+    var t = e.target; if (!t.closest) return;
+    var s = t.closest('.spot'), ti = fancy ? t.closest('.tilt') : null, m = fancy ? t.closest('.magnetic') : null;
+    if (fx.tilt && fx.tilt !== ti) resetTilt(fx.tilt);
+    if (fx.mag && fx.mag !== m) resetMag(fx.mag);
+    if (s !== fx.spot || ti !== fx.tilt || m !== fx.mag) { fx.spot = s; fx.tilt = ti; fx.mag = m; fxRects(); }
+  }, { passive: true });
+  doc.addEventListener('mouseleave', function () { resetTilt(fx.tilt); resetMag(fx.mag); fx.spot = fx.tilt = fx.mag = null; });
+  function fxApply() {
+    fx.raf = 0;
+    var e = fx.e; if (!e || lite) return;
+    if (window.scrollY !== fx.sy) fxRects();
+    var r;
+    if (fx.spot && fx.rs) { r = fx.rs; fx.spot.style.setProperty('--mx', (e.clientX - r.left) + 'px'); fx.spot.style.setProperty('--my', (e.clientY - r.top) + 'px'); }
+    if (fx.tilt && fx.rt) {
+      r = fx.rt;
+      var x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
+      fx.tilt.style.transition = 'transform 0.1s linear';
+      fx.tilt.style.transform = 'perspective(900px) rotateY(' + (x * 9).toFixed(2) + 'deg) rotateX(' + (-y * 9).toFixed(2) + 'deg) translateZ(6px)';
+    }
+    if (fx.mag && fx.rm) {
+      r = fx.rm;
+      fx.mag.style.transform = 'translate(' + ((e.clientX - (r.left + r.width / 2)) * 0.25).toFixed(1) + 'px,' + ((e.clientY - (r.top + r.height / 2)) * 0.35).toFixed(1) + 'px)';
+    }
+  }
+  window.addEventListener('pointermove', function (e) { fx.e = e; if (!fx.raf) fx.raf = requestAnimationFrame(fxApply); }, { passive: true });
+  if (liteBtn) liteBtn.addEventListener('click', function () { setLite(!lite, true); });
+  setLite(lite, false, true);
 
   /* ---------- Custom cursor: ONE object (ring + dot move together), stretches with speed ---------- */
   var cursorStep = function () {};
+  var cursorOn = false;
   if (finePointer && !reduce) {
     var cur = $('#cursor'), ringEl = $('.cur-ring', cur), labelEl = $('.cur-label', cur);
     var mx = -100, my = -100, seen = false;
     window.addEventListener('pointermove', function (e) {
       mx = e.clientX; my = e.clientY;
+      seen = true;
+      if (lite) return;
       cur.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)'; // one element: dot and ring can never differ
-      if (!seen) { seen = true; body.classList.add('has-cursor', 'cursor-on'); }
+      if (!cursorOn) { cursorOn = true; body.classList.add('has-cursor', 'cursor-on'); }
     }, { passive: true });
-    document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor'); seen = false; });
+    document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor', 'cursor-on'); cursorOn = false; seen = false; });
 
     // Speed-based stretch: the ring squashes along the direction of travel (centre never moves)
     var lx = -100, ly = -100, sp = 0, ang = 0;
@@ -309,7 +331,7 @@
     canvas.width = W * dpr; canvas.height = H * dpr;
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var n = Math.min(72, Math.floor((W * H) / 20000));
+    var n = Math.min(48, Math.floor((W * H) / 26000));
     pts = [];
     for (var i = 0; i < n; i++) {
       pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, r: Math.random() * 1.4 + 0.6 });
@@ -345,7 +367,7 @@
       for (j2 = i + 1; j2 < pts.length; j2++) {
         q = pts[j2];
         var ax = p.x - q.x, ay = p.y - q.y, dd = ax * ax + ay * ay;
-        if (dd < 17000) lines[Math.min(BUCKETS - 1, (dd / 17000 * BUCKETS) | 0)].push(p.x, p.y, q.x, q.y);
+        if (dd < 14000) lines[Math.min(BUCKETS - 1, (dd / 14000 * BUCKETS) | 0)].push(p.x, p.y, q.x, q.y);
       }
     }
     ctx.lineWidth = 1;
@@ -359,13 +381,27 @@
     }
   }
 
-  // One requestAnimationFrame loop: the cursor updates every frame, the canvas at ~30 fps.
-  var lastTs = 0, lastDraw = 0;
+  // One requestAnimationFrame loop: the cursor stretch every frame, the canvas at ~24 fps (skipped in lighter mode).
+  var lastTs = 0, lastDraw = 0, t0 = 0, samples = [], judged = false;
   function frame(ts) {
-    var dt = lastTs ? Math.min(ts - lastTs, 64) : 16;
+    var raw = lastTs ? ts - lastTs : 16;
+    var dt = Math.min(raw, 64);
     lastTs = ts;
+    if (!t0) t0 = ts;
     cursorStep(dt, ts);
-    if (ts - lastDraw >= 33 && !doc.classList.contains('overlay-open')) { drawFrame(); lastDraw = ts; }
+    if (!lite && ts - lastDraw >= 42 && !doc.classList.contains('overlay-open')) { drawFrame(); lastDraw = ts; }
+    // Automatic lighter mode: if the page averages below ~38 fps for a few seconds, reduce the effects.
+    if (!judged && !lite) {
+      var el = ts - t0;
+      if (el > 1500 && el < 6500 && raw < 250) samples.push(raw);
+      if (el >= 6500) {
+        judged = true;
+        if (samples.length > 40) {
+          samples.sort(function (a, b) { return a - b; });
+          if (samples[samples.length >> 1] > 26) { setLite(true, false, true); toast('Switched to lighter effects for smoother scrolling. Toggle with the \u26A1 button.'); }
+        }
+      }
+    }
     if (visible) requestAnimationFrame(frame); else running = false;
   }
   function startLoop() { if (running || reduce && !finePointer) return; running = true; lastTs = 0; requestAnimationFrame(frame); }
@@ -378,7 +414,7 @@
     t.style.setProperty('--n', i % 10);
     var slug = t.getAttribute('data-icon');
     if (!slug) return;
-    var url = 'assets/icons/' + slug + '.svg';
+    var url = new URL('assets/icons/' + slug + '.svg', document.baseURI).href; // absolute: url() inside CSS variables resolves against the stylesheet, not the page
     var img = new Image();
     img.onload = function () { t.style.setProperty('--src', 'url("' + url + '")'); t.classList.add('has-icon'); };
     img.src = url; // on error the monogram stays
@@ -528,6 +564,7 @@
     { t: 'Palette: Ember', k: 'color', run: function () { setPalette('ember'); } },
     { t: 'Palette: Aurora', k: 'color', run: function () { setPalette('aurora'); } },
     { t: 'Go to Writing', k: '#writing', go: '#writing' },
+    { t: 'Toggle lighter effects (smoother)', k: 'performance', run: function () { setLite(!lite, true); } },
     { t: 'Open web resume', k: 'resume', run: function () { window.location.href = 'resume.html'; } },
     { t: 'Download resume', k: 'pdf', run: function () { window.location.href = 'assets/resume/Aryan_Patel_Resume.pdf'; } },
     { t: 'Open GitHub', k: 'github', run: function () { window.open('https://github.com/Aryan071', '_blank', 'noopener'); } },
