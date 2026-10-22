@@ -23,6 +23,41 @@
     readColors();
   }
   $('#themeBtn').addEventListener('click', toggleTheme);
+  /* ---------- Colour palettes ---------- */
+  var PALETTES = [
+    { id: 'emerald', name: 'Emerald', sw: 'linear-gradient(90deg,#34d399,#2dd4bf,#a3e635)' },
+    { id: 'royal', name: 'Royal Indigo', sw: 'linear-gradient(90deg,#818cf8,#a78bfa,#38bdf8)' },
+    { id: 'ember', name: 'Ember', sw: 'linear-gradient(90deg,#fbbf24,#fb923c,#f43f5e)' },
+    { id: 'aurora', name: 'Aurora', sw: 'linear-gradient(90deg,#22d3ee,#a78bfa,#f472b6)' },
+    { id: 'ice', name: 'Ice Mono', sw: 'linear-gradient(90deg,#e2e8f0,#93c5fd,#60a5fa)' }
+  ];
+  var DEFAULT_PALETTE = 'emerald';
+  function setPalette(id, silent) {
+    if (!PALETTES.some(function (p) { return p.id === id; })) id = DEFAULT_PALETTE;
+    doc.setAttribute('data-palette', id);
+    if (!silent) { try { localStorage.setItem('palette', id); } catch (e) {} }
+    $$('#palPop button').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-id') === id)); });
+    readColors();
+    if (!silent) toast('Palette: ' + PALETTES.filter(function (p) { return p.id === id; })[0].name);
+  }
+  var palPop = $('#palPop'), palBtn = $('#palBtn');
+  PALETTES.forEach(function (p) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'menuitemradio'); b.setAttribute('data-id', p.id);
+    b.innerHTML = '<span class="sw"></span><span></span>';
+    b.firstChild.style.background = p.sw;
+    b.lastChild.textContent = p.name;
+    b.addEventListener('click', function () { setPalette(p.id); closePal(); });
+    palPop.appendChild(b);
+  });
+  function closePal() { palPop.classList.remove('open'); palBtn.setAttribute('aria-expanded', 'false'); }
+  palBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var open = palPop.classList.toggle('open');
+    palBtn.setAttribute('aria-expanded', String(open));
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.pal-wrap')) closePal(); });
+
 
   /* ---------- Toast ---------- */
   var toastEl = $('#toast'), toastTimer;
@@ -217,11 +252,19 @@
   var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
   var pts = [], pointer = { x: -9999, y: -9999 };
   var col = { dot: '34,211,238', line: '167,139,250' };
-  function readColors() {
-    var light = doc.getAttribute('data-theme') === 'light';
-    col = light ? { dot: '8,145,178', line: '124,58,237' } : { dot: '34,211,238', line: '167,139,250' };
+  function hexToRgb(hex) {
+    hex = (hex || '').trim().replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(function (x) { return x + x; }).join('');
+    var n = parseInt(hex, 16);
+    return isNaN(n) ? '34,211,238' : ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255);
   }
-  readColors();
+  function readColors() {
+    var cs = getComputedStyle(doc);
+    col = { dot: hexToRgb(cs.getPropertyValue('--a1')), line: hexToRgb(cs.getPropertyValue('--a2')) };
+  }
+  var savedPal = null;
+  try { savedPal = localStorage.getItem('palette'); } catch (e) {}
+  setPalette(savedPal || DEFAULT_PALETTE, true);
   function resize() {
     W = window.innerWidth; H = window.innerHeight;
     canvas.width = W * dpr; canvas.height = H * dpr;
@@ -299,6 +342,11 @@
     { t: 'Go to Achievements', k: '#achievements', go: '#achievements' },
     { t: 'Go to Contact', k: '#contact', go: '#contact' },
     { t: 'Toggle light / dark theme', k: 'theme', run: toggleTheme },
+    { t: 'Palette: Emerald', k: 'color', run: function () { setPalette('emerald'); } },
+    { t: 'Palette: Royal Indigo', k: 'color', run: function () { setPalette('royal'); } },
+    { t: 'Palette: Ember', k: 'color', run: function () { setPalette('ember'); } },
+    { t: 'Palette: Aurora', k: 'color', run: function () { setPalette('aurora'); } },
+    { t: 'Palette: Ice Mono', k: 'color', run: function () { setPalette('ice'); } },
     { t: 'Download resume', k: 'pdf', run: function () { window.location.href = 'assets/resume/Aryan_Patel_Resume.pdf'; } },
     { t: 'Open GitHub', k: 'github', run: function () { window.open('https://github.com/Aryan071', '_blank', 'noopener'); } },
     { t: 'Open LinkedIn', k: 'linkedin', run: function () { window.open('https://linkedin.com/in/aryan-patel-4272191a4/', '_blank', 'noopener'); } },
@@ -337,7 +385,7 @@
   });
   document.addEventListener('keydown', function (e) {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); overlay.hidden ? openPalette() : closePalette(); }
-    else if (e.key === 'Escape') { if (!overlay.hidden) closePalette(); closeMenu(); }
+    else if (e.key === 'Escape') { if (!overlay.hidden) closePalette(); closeMenu(); closePal(); }
   });
 
   // No-JS safety: if the observer never fires (very old browsers), show everything.
