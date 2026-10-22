@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-palette="graphite">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A 60-second checklist for reviewing AI-generated code | Aryan Patel</title>
+  <meta name="description" content="The six questions I ask when reviewing AI-generated code: correctness, security, edge cases, tests, maintainability and performance, with an example.">
+  <meta name="theme-color" content="#08090a">
+  <link rel="canonical" href="https://aryan071.github.io/Portfolio/writing/reviewing-ai-generated-code.html">
+  <meta property="og:title" content="A 60-second checklist for reviewing AI-generated code | Aryan Patel">
+  <meta property="og:description" content="The six questions I ask when reviewing AI-generated code: correctness, security, edge cases, tests, maintainability and performance, with an example.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://aryan071.github.io/Portfolio/assets/images/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css?v=13">
+  <link rel="stylesheet" href="../assets/css/page.css?v=1">
+  <script src="../assets/js/page.js?v=1"></script>
+</head>
+<body class="page">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="page-nav"><div class="container">
+    <a class="back" href="../index.html">&larr; Aryan Patel</a>
+    <nav aria-label="Pages"><a href="../index.html#projects">Projects</a><a href="../index.html#writing">Writing</a><a href="../resume.html">Resume</a><a href="../index.html#contact">Contact</a></nav>
+  </div></header>
+
+  <main class="container article" id="main">
+    <p class="meta">Code review · AI-assisted development · 4 min read</p>
+    <h1>A 60-second checklist for reviewing AI-generated code</h1>
+    <p class="standfirst">AI tools write code that looks right. The review job is to find where it is not. This is the checklist I use, in the order I use it.</p>
+
+    <h2>The six questions</h2>
+    <ol>
+      <li><strong>Correctness.</strong> Does it do what the ticket says? Does every library and function it calls really exist in the version we use? (Invented APIs are a known failure.)</li>
+      <li><strong>Security.</strong> Is user input used in a query, a file path or a shell command? Is there an authorization check, not only a login check? Are secrets or tokens logged?</li>
+      <li><strong>Edge cases.</strong> Empty input, huge input, <code>None</code>, duplicates, time zones, retries, two requests at the same time.</li>
+      <li><strong>Tests.</strong> Do the tests assert behaviour, or only run the code? Would they fail if the bug came back?</li>
+      <li><strong>Maintainability.</strong> Is it the smallest thing that works? Would a teammate understand it in six months?</li>
+      <li><strong>Performance.</strong> Queries inside loops, no pagination, blocking calls inside async code.</li>
+    </ol>
+
+    <h2>An example</h2>
+    <pre><code># AI-generated: looks fine
+@app.get("/orders/{order_id}")
+def get_order(order_id: int, db=Depends(get_db)):
+    return db.execute(f"SELECT * FROM orders WHERE id = {order_id}").fetchone()</code></pre>
+    <p>Problems, most serious first: any logged-in user can read any order (no ownership check), the query is built with string formatting (use bound parameters), and <code>SELECT *</code> returns columns the client should not see.</p>
+    <pre><code>@app.get("/orders/{order_id}")
+def get_order(order_id: int, user=Depends(current_user), db=Depends(get_db)):
+    row = db.execute(
+        text("SELECT id, status, total FROM orders WHERE id = :id AND user_id = :uid"),
+        {"id": order_id, "uid": user.id},
+    ).fetchone()
+    if row is None:
+        raise HTTPException(404)
+    return row</code></pre>
+
+    <h2>How to write the comment</h2>
+    <p>State what you see, why it matters, and a concrete fix. For example: <em>"This lets any user fetch any order by changing the ID. Filter by the current user's ID in the query, and return 404 when nothing matches."</em> Mark each comment as blocking or a suggestion, so the author knows what must change.</p>
+
+    <h2>Where the checklist stops</h2>
+    <p>It finds bugs a reader can spot. It does not replace running the code, reading the tests, or the CI checks (linters, type checks, security scans). I treat AI output like a pull request from a fast colleague who has never seen our system.</p>
+  </main>
+
+  <footer class="footer"><div class="container"><p>&copy; 2026 Aryan Patel &middot; Ahmedabad, India (IST)</p><a class="to-top-link" href="../index.html">Back to portfolio</a></div></footer>
+</body>
+</html>

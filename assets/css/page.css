@@ -1,0 +1,54 @@
+/* Sub-pages: articles, resume, 404 */
+.page { padding-top: 0; }
+.page-nav { position: sticky; top: 0; z-index: 50; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: color-mix(in srgb, var(--bg) 78%, transparent); border-bottom: 1px solid var(--border); }
+.page-nav .container { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 14px 0; }
+.page-nav nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.page-nav a { padding: 7px 12px; border-radius: 999px; color: var(--muted); font-size: 0.92rem; transition: color 0.2s, background 0.2s; }
+.page-nav a:hover { color: var(--text); background: var(--surface-2); }
+.page-nav .back { color: var(--text); font-weight: 600; padding-left: 0; }
+.article { max-width: 760px; padding: 64px 0 40px; }
+.article.center { text-align: center; padding-top: 120px; }
+.article .meta { font: 500 0.82rem var(--mono); color: var(--a1); margin-bottom: 12px; }
+.article h1 { font: 700 clamp(2rem, 5vw, 3rem)/1.12 var(--display); letter-spacing: -0.02em; margin-bottom: 18px; }
+.article .standfirst { font-size: 1.15rem; color: var(--muted); margin-bottom: 36px; }
+.article h2 { font: 600 1.4rem var(--display); margin: 38px 0 12px; }
+.article p, .article li { color: var(--muted); font-size: 1.02rem; line-height: 1.75; }
+.article p { margin-bottom: 14px; }
+.article p strong, .article li strong { color: var(--text); font-weight: 600; }
+.article ul, .article ol { margin: 0 0 16px 22px; display: grid; gap: 8px; list-style: revert; }
+.article code { font: 0.9em var(--mono); padding: 2px 6px; border-radius: 6px; background: var(--surface-2); color: var(--a1); }
+.article pre { margin: 16px 0 22px; padding: 18px 20px; border-radius: 14px; border: 1px solid var(--border); background: color-mix(in srgb, var(--bg-2) 85%, transparent); overflow-x: auto; }
+.article pre code { padding: 0; background: none; color: var(--text); font-size: 0.86rem; line-height: 1.7; }
+.tbl { width: 100%; border-collapse: collapse; margin: 14px 0 20px; font-size: 0.93rem; }
+.tbl th, .tbl td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); color: var(--muted); }
+.tbl th { color: var(--text); font-weight: 600; font-size: 0.85rem; }
+.tbl td strong { color: var(--text); }
+.repo-link a { color: var(--a1); border-bottom: 1px dashed var(--a1); }
+.page .footer { margin-top: 60px; }
+.page .footer a { color: var(--a1); }
+@media (max-width: 760px) { .article { padding-top: 40px; } .tbl { display: block; overflow-x: auto; } }
+
+/* Resume page */
+.resume { max-width: 860px; padding: 56px 0 30px; }
+.resume header h1 { font: 700 2.6rem/1.1 var(--display); margin-bottom: 6px; }
+.resume .contact-line { color: var(--muted); font-size: 0.95rem; margin-bottom: 6px; }
+.resume .contact-line a { color: var(--a1); }
+.resume .summary { color: var(--muted); margin: 14px 0 6px; }
+.resume h2 { font: 600 0.82rem var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--a1); margin: 30px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.resume .job { margin-bottom: 18px; }
+.resume .job-head { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.resume .job-head h3 { font: 600 1.05rem var(--display); }
+.resume .job-head span { font: 0.85rem var(--mono); color: var(--muted); }
+.resume ul { margin: 8px 0 0 20px; display: grid; gap: 6px; list-style: disc; }
+.resume li, .resume p, .resume dd { color: var(--muted); font-size: 0.97rem; }
+.resume dl { display: grid; gap: 6px; }
+.resume dt { color: var(--text); font-weight: 600; display: inline; }
+.resume dd { display: inline; margin: 0 0 0 6px; }
+.resume .actions { display: flex; gap: 10px; margin: 16px 0 0; flex-wrap: wrap; }
+@media print {
+  .aurora, .page-nav, .footer, .actions, #bg, .noise { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .resume * { color: #111 !important; }
+  .resume h2 { color: #333 !important; border-color: #bbb; }
+  .resume { padding: 0; max-width: 100%; }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-palette="graphite">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why BM25 scores from different shards can't be compared | Aryan Patel</title>
+  <meta name="description" content="A worked example of why per-shard BM25 scores are not comparable and how a two-phase query fixes it, from my distributed search engine Atlas.">
+  <meta name="theme-color" content="#08090a">
+  <link rel="canonical" href="https://aryan071.github.io/Portfolio/writing/two-phase-bm25.html">
+  <meta property="og:title" content="Why BM25 scores from different shards can't be compared | Aryan Patel">
+  <meta property="og:description" content="A worked example of why per-shard BM25 scores are not comparable and how a two-phase query fixes it, from my distributed search engine Atlas.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://aryan071.github.io/Portfolio/assets/images/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css?v=13">
+  <link rel="stylesheet" href="../assets/css/page.css?v=1">
+  <script src="../assets/js/page.js?v=1"></script>
+</head>
+<body class="page">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="page-nav"><div class="container">
+    <a class="back" href="../index.html">&larr; Aryan Patel</a>
+    <nav aria-label="Pages"><a href="../index.html#projects">Projects</a><a href="../index.html#writing">Writing</a><a href="../resume.html">Resume</a><a href="../index.html#contact">Contact</a></nav>
+  </div></header>
+
+  <main class="container article" id="main">
+    <p class="meta">Distributed systems · Search · 6 min read</p>
+    <h1>Why BM25 scores from different shards can't be compared</h1>
+    <p class="standfirst">When I split Atlas, my search engine, across shards, the same query produced rankings that looked fine and were wrong. The cause is one term in the formula. The fix is a second round trip.</p>
+
+    <h2>The problem in one sentence</h2>
+    <p>BM25 multiplies a term's <strong>IDF</strong> (how rare the term is) by a term-frequency part. IDF depends on two collection-wide numbers: <code>N</code>, the number of documents, and <code>df</code>, how many of them contain the term. A shard only knows <em>its own</em> <code>N</code> and <code>df</code>.</p>
+
+    <h2>A tiny example</h2>
+    <p>Take the term <code>"raft"</code>. Shard A holds 10 documents and 1 of them contains it. Shard B holds 1,000 documents and 1 of them contains it. Use Lucene-style IDF, <code>ln(1 + (N - df + 0.5) / (df + 0.5))</code>:</p>
+    <table class="tbl"><thead><tr><th></th><th>N</th><th>df</th><th>IDF</th><th>Score of a doc with tf=2</th></tr></thead><tbody>
+      <tr><td>Shard A (local)</td><td>10</td><td>1</td><td>1.99</td><td>2.74</td></tr>
+      <tr><td>Shard B (local)</td><td>1,000</td><td>1</td><td>6.50</td><td>8.94</td></tr>
+      <tr><td><strong>Global</strong> (both shards)</td><td>1,010</td><td>2</td><td>6.00</td><td>8.25</td></tr>
+    </tbody></table>
+    <p>The two documents are equally relevant, but the one on shard B scores more than three times higher, only because its shard is bigger. If the coordinator merges the shards' top results by score, shard B wins for the wrong reason. (Scores use k1 = 1.2, b = 0.75 and a document of average length.)</p>
+
+    <h2>The fix: a two-phase query</h2>
+    <ol>
+      <li><strong>Phase A, statistics.</strong> The coordinator asks every shard for its <code>N</code>, the <code>df</code> of each query term, and field lengths. It adds them up to global statistics.</li>
+      <li><strong>Phase B, scoring.</strong> The coordinator sends the query <em>and</em> the global statistics to every shard. Each shard scores with the same IDF and returns its top results.</li>
+      <li><strong>Merge.</strong> Now scores are comparable. The coordinator merges by score descending, then by document ID ascending, so ties are deterministic.</li>
+    </ol>
+    <pre><code>async def search(q, limit=10):
+    stats = await gather(*(s.stats(q) for s in shards))   # phase A
+    g = merge_stats(stats)                                 # N, df, lengths
+    hits = await gather(*(s.score(q, g) for s in shards))  # phase B
+    return top_k(hits, limit)                              # score desc, id asc</code></pre>
+
+    <h2>What it costs</h2>
+    <p>One extra round trip per query. In my benchmark (4 shards versus 1, 8 concurrent clients, 100,000 documents, one laptop, synthetic data) the sharded setup still reached <strong>2.7x the throughput and 3.3x lower p95 latency</strong>, so the extra phase paid for itself. The numbers come from the benchmark notes in the Atlas repository, and they describe that setup only: the coordinator becomes the bottleneck before the shards do, and my own p95 target of 200 ms is not met under concurrency at that size.</p>
+
+    <h2>What I would do differently</h2>
+    <ul>
+      <li>Cache the global statistics per index generation instead of fetching them for every query. (Atlas already keys its result cache by generation.)</li>
+      <li>Add consistent hashing so resharding does not need a full rebuild.</li>
+    </ul>
+    <p class="repo-link"><a href="https://github.com/Aryan071/Atlas" target="_blank" rel="noopener">Read the code and benchmarks on GitHub &nearr;</a></p>
+  </main>
+
+  <footer class="footer"><div class="container"><p>&copy; 2026 Aryan Patel &middot; Ahmedabad, India (IST)</p><a class="to-top-link" href="../index.html">Back to portfolio</a></div></footer>
+</body>
+</html>

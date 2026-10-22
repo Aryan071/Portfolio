@@ -11,8 +11,10 @@
   <meta property="og:title" content="Aryan Patel — Software Engineer">
   <meta property="og:description" content="Scalable full-stack and backend systems: Python, FastAPI, React, Node.js, distributed search and observability.">
   <meta property="og:url" content="https://aryan071.github.io/Portfolio/">
-  <meta property="og:image" content="https://aryan071.github.io/Portfolio/assets/images/profile.jpeg">
-  <meta name="twitter:card" content="summary">
+  <meta property="og:image" content="https://aryan071.github.io/Portfolio/assets/images/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='1' stop-color='%23a78bfa'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%2307080c'/%3E%3Ctext x='32' y='43' font-family='Arial' font-weight='700' font-size='30' text-anchor='middle' fill='url(%23g)'%3EAP%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,7 +22,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Aryan Patel","jobTitle":"Software Engineer","url":"https://aryan071.github.io/Portfolio/","image":"https://aryan071.github.io/Portfolio/assets/images/profile.jpeg","address":{"@type":"PostalAddress","addressLocality":"Ahmedabad","addressCountry":"IN"},"alumniOf":"Charotar University of Science and Technology","knowsAbout":["Python","FastAPI","React","Node.js","PostgreSQL","MySQL","MongoDB","Kafka","Redis","Distributed systems"],"sameAs":["https://github.com/Aryan071","https://linkedin.com/in/aryan-patel-4272191a4/"]}</script>
   <script>document.documentElement.classList.add("js")</script>
-  <link rel="stylesheet" href="assets/css/site.css?v=11">
+  <link rel="stylesheet" href="assets/css/site.css?v=16">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
@@ -46,6 +48,7 @@
         <li><a href="#about">About</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#projects">Projects</a></li>
+        <li><a href="#writing">Writing</a></li>
         <li><a href="#skills">Skills</a></li>
         <li><a href="#achievements">Achievements</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -150,7 +153,7 @@
         <header class="sec-head reveal"><span class="idx">01</span><h2>About <em>me</em></h2><p>Systems that stay fast when the data and the traffic grow.</p></header>
         <div class="bento">
           <article class="card glass spot tilt b-photo reveal">
-            <div class="photo-ring"><img src="assets/images/profile.jpeg" alt="Portrait of Aryan Patel" width="220" height="220" loading="lazy"></div>
+            <div class="photo-ring"><picture><source srcset="assets/images/profile.webp" type="image/webp"><img src="assets/images/profile.jpeg" alt="Portrait of Aryan Patel" width="220" height="220" loading="lazy"></picture></div>
             <h3>Aryan Patel</h3>
             <p class="muted">Software Engineer · Ahmedabad, India</p>
           </article>
@@ -188,6 +191,15 @@
               <li><span class="badge">2025</span> Google Cloud Associate Engineer</li>
             </ul>
           </article>
+        </div>
+        <div class="how">
+          <h3 class="how-title reveal">How I work</h3>
+          <div class="how-grid">
+            <article class="reveal"><b>1</b><h4>Measure first</h4><p>I find the real bottleneck before changing code, then re-measure to prove the change helped.</p></article>
+            <article class="reveal"><b>2</b><h4>Review for the next reader</h4><p>I review pull requests for accuracy, testability and efficiency, and I word feedback so it is easy to act on.</p></article>
+            <article class="reveal"><b>3</b><h4>Test the edges</h4><p>Unit and API tests, plus a habit of asking what happens with empty, huge or duplicate input.</p></article>
+            <article class="reveal"><b>4</b><h4>Ship in small steps</h4><p>Iterative design and code review, one release at a time. Three major production releases at O2H.</p></article>
+          </div>
         </div>
       </div>
     </section>
@@ -267,7 +279,7 @@
               <li><b data-count="3.3" data-dec="1" data-suffix="x">0</b><span>lower p95 latency</span></li>
               <li><b data-count="0">0</b><span>errors in shard-kill drill</span></li>
             </ul>
-            <details class="case"><summary>Case study</summary><dl><div><dt>Problem</dt><dd>If every shard ranks with its own statistics, the same query gives scores that cannot be compared across shards.</dd></div><div><dt>Approach</dt><dd>A two-phase query: the coordinator first collects global term statistics, then every shard scores with them. Documents are hash-partitioned across shards, Kafka feeds ingestion, and a cache serves hot queries.</dd></div><div><dt>Result</dt><dd>2.7x throughput and 3.3x lower p95 latency on 4 shards versus 1 (8 clients, 100K documents, one machine, synthetic data). Zero request errors when a shard was killed under load; results were flagged as partial.</dd></div></dl></details>
+            <details class="case"><summary>Case study</summary><div class="case-body"><svg class="dg" viewBox="0 0 580 236" role="img" aria-label="Atlas architecture: client, gateway, query coordinator, shards fed by Kafka" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><line class="edge" x1="102" y1="43" x2="150" y2="43" marker-end="url(#ar)"/><line class="edge" x1="300" y1="43" x2="352" y2="43" marker-end="url(#ar)"/><line class="edge planned" x1="225" y1="66" x2="225" y2="104" marker-end="url(#ar)"/><line class="edge" x1="463" y1="66" x2="282" y2="176" marker-end="url(#ar)"/><line class="edge" x1="463" y1="66" x2="396" y2="176" marker-end="url(#ar)"/><line class="edge" x1="463" y1="66" x2="517" y2="176" marker-end="url(#ar)"/><line class="edge" x1="156" y1="199" x2="232" y2="199" marker-end="url(#ar)"/><g class="node n"><rect x="6" y="20" width="96" height="46" rx="9"/><text class="t1" x="54.0" y="42.0" text-anchor="middle" dominant-baseline="middle">Client</text></g><g class="node n"><rect x="150" y="20" width="150" height="46" rx="9"/><text class="t1" x="225.0" y="39.0" text-anchor="middle" dominant-baseline="middle">Gateway (FastAPI)</text><text class="t2" x="225.0" y="54.0" text-anchor="middle" dominant-baseline="middle">auth · limits · cache</text></g><g class="node hot"><rect x="352" y="20" width="222" height="46" rx="9"/><text class="t1" x="463.0" y="39.0" text-anchor="middle" dominant-baseline="middle">Query coordinator</text><text class="t2" x="463.0" y="54.0" text-anchor="middle" dominant-baseline="middle">A: global stats · B: score · merge</text></g><g class="node n"><rect x="150" y="104" width="150" height="40" rx="9"/><text class="t1" x="225.0" y="120.0" text-anchor="middle" dominant-baseline="middle">Redis / LRU cache</text><text class="t2" x="225.0" y="135.0" text-anchor="middle" dominant-baseline="middle">keyed by index generation</text></g><g class="node n"><rect x="6" y="176" width="150" height="46" rx="9"/><text class="t1" x="81.0" y="195.0" text-anchor="middle" dominant-baseline="middle">Kafka</text><text class="t2" x="81.0" y="210.0" text-anchor="middle" dominant-baseline="middle">partition = shard</text></g><g class="node n"><rect x="232" y="176" width="100" height="46" rx="9"/><text class="t1" x="282.0" y="195.0" text-anchor="middle" dominant-baseline="middle">Shard 0</text><text class="t2" x="282.0" y="210.0" text-anchor="middle" dominant-baseline="middle">segments + manifest</text></g><g class="node n"><rect x="346" y="176" width="100" height="46" rx="9"/><text class="t1" x="396.0" y="198.0" text-anchor="middle" dominant-baseline="middle">Shard 1</text></g><g class="node n"><rect x="460" y="176" width="114" height="46" rx="9"/><text class="t1" x="517.0" y="198.0" text-anchor="middle" dominant-baseline="middle">Shard N-1</text></g></svg><dl><div><dt>Problem</dt><dd>If every shard ranks with its own statistics, the same query gives scores that cannot be compared across shards.</dd></div><div><dt>Approach</dt><dd>A two-phase query: the coordinator first collects global term statistics, then every shard scores with them. Documents are hash-partitioned across shards, Kafka feeds ingestion, and a cache serves hot queries.</dd></div><div><dt>Result</dt><dd>2.7x throughput and 3.3x lower p95 latency on 4 shards versus 1 (8 clients, 100K documents, one machine, synthetic data). Zero request errors when a shard was killed under load; results were flagged as partial. <a href="writing/two-phase-bm25.html">Read the write-up</a>.</dd></div></dl></div></details>
             <div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">Kafka</span><span class="chip">Redis</span><span class="chip">BM25</span></div>
           </article>
 
@@ -278,31 +290,49 @@
               </a>
             </div>
             <h3>TraceLens <small>Production-to-code intelligence</small></h3>
-            <p>An engine that links a production failure to the commit that caused it, using OpenTelemetry traces stored in ClickHouse.</p>
+            <p>Ask "why is this endpoint slow after the deploy?" and get an answer from evidence: OpenTelemetry traces, a code index and git history joined by a correlation engine, shown in VS Code.</p>
             <ul class="metrics">
               <li><b data-count="49" data-suffix="K">0</b><span>spans per second ingested</span></li>
-              <li><b>#1</b><span>guilty commit ranked first</span></li>
+              <li><b>#1</b><span>guilty commit ranked first in demo runs</span></li>
               <li><b data-count="0">0</b><span>rejections at load</span></li>
             </ul>
-            <details class="case"><summary>Case study</summary><dl><div><dt>Problem</dt><dd>When production breaks, finding the guilty commit usually means searching logs by hand.</dd></div><div><dt>Approach</dt><dd>OpenTelemetry spans are ingested into ClickHouse and compared across releases. Suspect commits are then ranked by how strongly they line up with the change.</dd></div><div><dt>Result</dt><dd>Ingested about 49K spans per second with no rejections (the rate accepted at 50K offered, 4 processes). In scripted test scenarios the guilty commit ranked first.</dd></div></dl></details>
+            <details class="case"><summary>Case study</summary><div class="case-body"><svg class="dg" viewBox="0 0 600 226" role="img" aria-label="TraceLens architecture: traces and git history flow into a correlation engine" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><line class="edge" x1="126" y1="43" x2="160" y2="43" marker-end="url(#ar)"/><line class="edge" x1="290" y1="43" x2="324" y2="43" marker-end="url(#ar)"/><line class="edge" x1="126" y1="133" x2="160" y2="133" marker-end="url(#ar)"/><line class="edge" x1="290" y1="133" x2="324" y2="133" marker-end="url(#ar)"/><line class="edge" x1="444" y1="43" x2="470" y2="66" marker-end="url(#ar)"/><line class="edge" x1="444" y1="133" x2="470" y2="108" marker-end="url(#ar)"/><line class="edge" x1="528" y1="112" x2="528" y2="156" marker-end="url(#ar)"/><g class="node n"><rect x="6" y="20" width="120" height="46" rx="9"/><text class="t1" x="66.0" y="39.0" text-anchor="middle" dominant-baseline="middle">Your services</text><text class="t2" x="66.0" y="54.0" text-anchor="middle" dominant-baseline="middle">OpenTelemetry</text></g><g class="node n"><rect x="160" y="20" width="130" height="46" rx="9"/><text class="t1" x="225.0" y="39.0" text-anchor="middle" dominant-baseline="middle">Ingest</text><text class="t2" x="225.0" y="54.0" text-anchor="middle" dominant-baseline="middle">batching · backpressure</text></g><g class="node n"><rect x="324" y="20" width="120" height="46" rx="9"/><text class="t1" x="384.0" y="39.0" text-anchor="middle" dominant-baseline="middle">ClickHouse</text><text class="t2" x="384.0" y="54.0" text-anchor="middle" dominant-baseline="middle">spans</text></g><g class="node n"><rect x="6" y="110" width="120" height="46" rx="9"/><text class="t1" x="66.0" y="132.0" text-anchor="middle" dominant-baseline="middle">Git repo</text></g><g class="node n"><rect x="160" y="110" width="130" height="46" rx="9"/><text class="t1" x="225.0" y="129.0" text-anchor="middle" dominant-baseline="middle">Indexer</text><text class="t2" x="225.0" y="144.0" text-anchor="middle" dominant-baseline="middle">symbols · call graph</text></g><g class="node n"><rect x="324" y="110" width="120" height="46" rx="9"/><text class="t1" x="384.0" y="129.0" text-anchor="middle" dominant-baseline="middle">PostgreSQL</text><text class="t2" x="384.0" y="144.0" text-anchor="middle" dominant-baseline="middle">code index · deploys</text></g><g class="node hot"><rect x="462" y="62" width="132" height="50" rx="9"/><text class="t1" x="528.0" y="83.0" text-anchor="middle" dominant-baseline="middle">Correlation engine</text><text class="t2" x="528.0" y="98.0" text-anchor="middle" dominant-baseline="middle">regressions · rank commits</text></g><g class="node n"><rect x="462" y="156" width="132" height="50" rx="9"/><text class="t1" x="528.0" y="177.0" text-anchor="middle" dominant-baseline="middle">Query API</text><text class="t2" x="528.0" y="192.0" text-anchor="middle" dominant-baseline="middle">→ VS Code extension</text></g></svg><dl><div><dt>Problem</dt><dd>When production slows down or breaks, finding the commit responsible usually means searching logs and git history by hand.</dd></div><div><dt>Approach</dt><dd>Traces go into ClickHouse; a code index and deployment records go into PostgreSQL. A deterministic engine compares releases, maps slow queries back to the line of code, and ranks commits. An LLM may phrase the result, but every claim must cite evidence.</dd></div><div><dt>Result</dt><dd>About 49K spans/s accepted when 50K are offered to 4 processes, with 0 rejections (one process tops out near 24K). In the demo scenarios the guilty commit ranked #1. <a href="writing/ingest-throughput-honestly.html">Read how I measured it</a>.</dd></div></dl></div></details>
             <div class="chips"><span class="chip">Python</span><span class="chip">TypeScript</span><span class="chip">ClickHouse</span><span class="chip">OpenTelemetry</span></div>
           </article>
 
           <article class="project card glass spot tilt reveal">
-            <div class="p-top"><span class="p-year">2025</span>
+            <div class="p-top"><span class="p-year">2025</span><span class="status">RAG in progress</span>
               <a class="p-link magnetic" href="https://github.com/Aryan071/Knowlify" target="_blank" rel="noopener" aria-label="Knowlify on GitHub">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
               </a>
             </div>
-            <h3>Knowlify <small>AI information retrieval assistant</small></h3>
-            <p>An AI assistant that answers questions from your own documents, with REST APIs for document ingestion and query resolution, built on LLM APIs.</p>
-            <ul class="metrics one">
-              <li><b>RAG</b><span>ingest · retrieve · answer</span></li>
+            <h3>Knowlify <small>AI knowledge-management platform (RAG)</small></h3>
+            <p>A platform where teams upload documents and ask questions answered from them, using retrieval-augmented generation. The foundation is built; the AI pipeline is the next phase.</p>
+            <ul class="metrics">
+              <li><b>JWT</b><span>auth with roles and permissions</span></li>
+              <li><b>pg16</b><span>PostgreSQL + pgvector schema</span></li>
+              <li><b>14</b><span>architecture documents</span></li>
             </ul>
-            <details class="case"><summary>Case study</summary><dl><div><dt>Problem</dt><dd>Finding an answer buried in a pile of documents takes too long.</dd></div><div><dt>Approach</dt><dd>Documents are ingested through a REST API and stored in PostgreSQL. At question time the relevant passages are retrieved and given to an LLM, which answers in a React interface (retrieval-augmented generation).</dd></div></dl></details>
-            <div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">LLM APIs</span><span class="chip">PostgreSQL</span><span class="chip">ReactJS</span></div>
+            <details class="case"><summary>Case study</summary><div class="case-body"><svg class="dg" viewBox="0 0 600 254" role="img" aria-label="Knowlify: built foundation and the planned retrieval pipeline" xmlns="http://www.w3.org/2000/svg"><defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="currentColor"/></marker></defs><line class="edge" x1="116" y1="43" x2="152" y2="43" marker-end="url(#ar)"/><line class="edge" x1="282" y1="43" x2="322" y2="43" marker-end="url(#ar)"/><line class="edge" x1="452" y1="43" x2="488" y2="43" marker-end="url(#ar)"/><line class="edge planned" x1="100" y1="150" x2="116" y2="150" marker-end="url(#ar)"/><line class="edge planned" x1="220" y1="150" x2="236" y2="150" marker-end="url(#ar)"/><line class="edge planned" x1="340" y1="150" x2="356" y2="150" marker-end="url(#ar)"/><line class="edge planned" x1="468" y1="150" x2="484" y2="150" marker-end="url(#ar)"/><g class="node built"><rect x="6" y="20" width="110" height="46" rx="9"/><text class="t1" x="61.0" y="39.0" text-anchor="middle" dominant-baseline="middle">React app</text><text class="t2" x="61.0" y="54.0" text-anchor="middle" dominant-baseline="middle">TypeScript · Vite</text></g><g class="node built"><rect x="152" y="20" width="130" height="46" rx="9"/><text class="t1" x="217.0" y="39.0" text-anchor="middle" dominant-baseline="middle">FastAPI</text><text class="t2" x="217.0" y="54.0" text-anchor="middle" dominant-baseline="middle">JWT · roles · health</text></g><g class="node built"><rect x="322" y="20" width="130" height="46" rx="9"/><text class="t1" x="387.0" y="39.0" text-anchor="middle" dominant-baseline="middle">PostgreSQL</text><text class="t2" x="387.0" y="54.0" text-anchor="middle" dominant-baseline="middle">pgvector schema</text></g><g class="node built"><rect x="488" y="20" width="106" height="46" rx="9"/><text class="t1" x="541.0" y="39.0" text-anchor="middle" dominant-baseline="middle">Workers</text><text class="t2" x="541.0" y="54.0" text-anchor="middle" dominant-baseline="middle">Celery · RabbitMQ</text></g><g class="node plan"><rect x="6" y="128" width="94" height="44" rx="9"/><text class="t1" x="53.0" y="149.0" text-anchor="middle" dominant-baseline="middle">Upload</text></g><g class="node plan"><rect x="116" y="128" width="104" height="44" rx="9"/><text class="t1" x="168.0" y="149.0" text-anchor="middle" dominant-baseline="middle">Chunk</text></g><g class="node plan"><rect x="236" y="128" width="104" height="44" rx="9"/><text class="t1" x="288.0" y="149.0" text-anchor="middle" dominant-baseline="middle">Embed</text></g><g class="node plan"><rect x="356" y="128" width="112" height="44" rx="9"/><text class="t1" x="412.0" y="146.0" text-anchor="middle" dominant-baseline="middle">Search</text><text class="t2" x="412.0" y="161.0" text-anchor="middle" dominant-baseline="middle">pgvector</text></g><g class="node plan"><rect x="484" y="128" width="110" height="44" rx="9"/><text class="t1" x="539.0" y="146.0" text-anchor="middle" dominant-baseline="middle">Answer</text><text class="t2" x="539.0" y="161.0" text-anchor="middle" dominant-baseline="middle">LLM + citations</text></g><g class="legend"><rect class="k-built" x="6" y="206" width="22" height="12" rx="3"/><text x="36" y="216">Built</text><rect class="k-plan" x="190" y="206" width="22" height="12" rx="3"/><text x="220" y="216">Designed, in progress</text></g></svg><dl><div><dt>Problem</dt><dd>Finding an answer buried in a pile of documents takes too long, and answers need to point back to their source.</dd></div><div><dt>Approach</dt><dd>Built so far: FastAPI with clean architecture, SQLAlchemy and Alembic, JWT auth with roles, PostgreSQL 16 with pgvector, Celery workers on RabbitMQ and Redis, a React + TypeScript front end, Docker Compose, Kubernetes manifests, CI, and Prometheus/Grafana/Loki configs. Designed next: upload, chunking, embeddings, semantic search and cited answers.</dd></div></dl></div></details>
+            <div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">pgvector</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Docker</span><span class="chip">Kubernetes</span></div>
           </article>
 
+        </div>
+        <div class="gh reveal" id="ghStrip" hidden>
+          <h3>Latest on GitHub</h3>
+          <ul id="ghList"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Writing -->
+    <section class="section" id="writing">
+      <div class="container">
+        <header class="sec-head reveal"><span class="idx">04</span><h2>Technical <em>writing</em></h2><p>Short notes on problems I solved and how I measured them.</p></header>
+        <div class="posts">
+          <a class="post card glass spot tilt reveal" href="writing/two-phase-bm25.html"><span class="tag">Distributed systems</span><h3>Why BM25 scores from different shards can't be compared</h3><p>A worked example, with numbers, of why per-shard statistics break ranking, and the two-phase query that fixes it.</p><span class="read">Read &middot; 6 min &rarr;</span></a>
+          <a class="post card glass spot tilt reveal" href="writing/ingest-throughput-honestly.html"><span class="tag">Observability</span><h3>What &ldquo;49K spans per second&rdquo; actually means</h3><p>Offered vs accepted vs landed rates, what limited my ingest path, and what the number does not show.</p><span class="read">Read &middot; 5 min &rarr;</span></a>
+          <a class="post card glass spot tilt reveal" href="writing/reviewing-ai-generated-code.html"><span class="tag">Code review</span><h3>A 60-second checklist for reviewing AI-generated code</h3><p>Six questions I ask, in order, with a real example and how to word the review comment.</p><span class="read">Read &middot; 4 min &rarr;</span></a>
         </div>
       </div>
     </section>
@@ -310,7 +340,7 @@
     <!-- Skills -->
     <section class="section" id="skills">
           <div class="container">
-            <header class="sec-head reveal"><span class="idx">04</span><h2>Technical <em>skills</em></h2><p>The tools I use to build, ship and debug.</p></header>
+            <header class="sec-head reveal"><span class="idx">05</span><h2>Technical <em>skills</em></h2><p>The tools I use to build, ship and debug.</p></header>
             <div class="skills-marquee reveal" aria-hidden="true">
               <div class="sm-row"><span>Data Structures &amp; Algorithms</span><span>System Design</span><span>Distributed Computing</span><span>Concurrency</span><span>OOP</span><span>Python</span><span>Java</span><span>C++</span><span>JavaScript</span><span>TypeScript</span><span>SQL</span><span>FastAPI</span><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>GraphQL</span><span>gRPC</span><span>Microservices</span><span>JWT</span><span>ReactJS</span><span>Redux</span><span>HTML5</span><span>CSS3</span><span>UI Design</span><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Redis</span><span>Kafka</span><span>RabbitMQ</span><span>AWS</span><span>Docker</span><span>Kubernetes</span><span>CI/CD</span><span>Code Review</span><span>Unit &amp; API Testing</span><span>Debugging</span><span>Performance Optimization</span><span>Agile/Scrum</span><span>Data Structures &amp; Algorithms</span><span>System Design</span><span>Distributed Computing</span><span>Concurrency</span><span>OOP</span><span>Python</span><span>Java</span><span>C++</span><span>JavaScript</span><span>TypeScript</span><span>SQL</span><span>FastAPI</span><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>GraphQL</span><span>gRPC</span><span>Microservices</span><span>JWT</span><span>ReactJS</span><span>Redux</span><span>HTML5</span><span>CSS3</span><span>UI Design</span><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Redis</span><span>Kafka</span><span>RabbitMQ</span><span>AWS</span><span>Docker</span><span>Kubernetes</span><span>CI/CD</span><span>Code Review</span><span>Unit &amp; API Testing</span><span>Debugging</span><span>Performance Optimization</span><span>Agile/Scrum</span></div>
               <div class="sm-row rev"><span>Code Review</span><span>Unit &amp; API Testing</span><span>Debugging</span><span>Performance Optimization</span><span>Agile/Scrum</span><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Redis</span><span>Kafka</span><span>RabbitMQ</span><span>AWS</span><span>Docker</span><span>Kubernetes</span><span>CI/CD</span><span>ReactJS</span><span>Redux</span><span>HTML5</span><span>CSS3</span><span>UI Design</span><span>FastAPI</span><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>GraphQL</span><span>gRPC</span><span>Microservices</span><span>JWT</span><span>Python</span><span>Java</span><span>C++</span><span>JavaScript</span><span>TypeScript</span><span>SQL</span><span>Data Structures &amp; Algorithms</span><span>System Design</span><span>Distributed Computing</span><span>Concurrency</span><span>OOP</span><span>Code Review</span><span>Unit &amp; API Testing</span><span>Debugging</span><span>Performance Optimization</span><span>Agile/Scrum</span><span>PostgreSQL</span><span>MySQL</span><span>MongoDB</span><span>Redis</span><span>Kafka</span><span>RabbitMQ</span><span>AWS</span><span>Docker</span><span>Kubernetes</span><span>CI/CD</span><span>ReactJS</span><span>Redux</span><span>HTML5</span><span>CSS3</span><span>UI Design</span><span>FastAPI</span><span>Node.js</span><span>Express.js</span><span>REST APIs</span><span>GraphQL</span><span>gRPC</span><span>Microservices</span><span>JWT</span><span>Python</span><span>Java</span><span>C++</span><span>JavaScript</span><span>TypeScript</span><span>SQL</span><span>Data Structures &amp; Algorithms</span><span>System Design</span><span>Distributed Computing</span><span>Concurrency</span><span>OOP</span></div>
@@ -374,7 +404,7 @@
     <!-- Achievements -->
     <section class="section" id="achievements">
       <div class="container">
-        <header class="sec-head reveal"><span class="idx">05</span><h2>Key <em>achievements</em></h2><p>Competitive programming keeps the fundamentals sharp.</p></header>
+        <header class="sec-head reveal"><span class="idx">06</span><h2>Key <em>achievements</em></h2><p>Competitive programming keeps the fundamentals sharp.</p></header>
         <div class="ach">
           <article class="card glass spot tilt reveal"><b data-count="700" data-suffix="+">0</b><h3>Problems solved</h3><p>Algorithmic problems on LeetCode across data structures and algorithms.</p></article>
           <article class="card glass spot tilt reveal"><b data-count="2100">0</b><h3>Contest rating</h3><p>LeetCode contest rating.</p></article>
@@ -387,7 +417,7 @@
     <section class="section" id="contact">
       <div class="container">
         <div class="contact card glass spot reveal">
-          <span class="idx">06</span>
+          <span class="idx">07</span>
           <h2>Let's build something <em>reliable</em>.</h2>
           <p>Looking for a fullstack or backend engineer who cares about correctness and performance? I'd like to hear about it. Email is the fastest way to reach me.</p>
           <div class="cta center">
@@ -396,6 +426,7 @@
           </div>
           <ul class="contact-list">
             <li><a href="tel:+919106028787">+91 91060 28787</a></li>
+            <li><a href="resume.html">Resume (web)</a></li>
             <li><a href="https://linkedin.com/in/aryan-patel-4272191a4/" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a href="https://github.com/Aryan071" target="_blank" rel="noopener">GitHub</a></li>
             <li>Ahmedabad, India</li>
@@ -407,7 +438,8 @@
 
   <footer class="footer">
     <div class="container">
-      <p>&copy; 2026 Aryan Patel. Built with plain HTML, CSS and JavaScript.</p>
+      <p>&copy; 2026 Aryan Patel &middot; Ahmedabad, India (IST) &middot; Built with plain HTML, CSS and JavaScript</p>
+      <nav class="foot-links" aria-label="Footer"><a href="resume.html">Resume</a><a href="#writing">Writing</a><a href="https://github.com/Aryan071" target="_blank" rel="noopener">GitHub</a><a href="https://linkedin.com/in/aryan-patel-4272191a4/" target="_blank" rel="noopener">LinkedIn</a></nav>
       <button class="to-top magnetic" id="toTop" type="button" aria-label="Back to top">↑</button>
     </div>
   </footer>
@@ -422,6 +454,6 @@
   </div>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="assets/js/site.js?v=9"></script>
+  <script src="assets/js/site.js?v=12"></script>
 </body>
 </html>

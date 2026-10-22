@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-palette="graphite">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>What "49K spans per second" actually means | Aryan Patel</title>
+  <meta name="description" content="How I measured the ingest throughput of TraceLens: offered vs accepted vs landed rates, what limited it, and what the number does not show.">
+  <meta name="theme-color" content="#08090a">
+  <link rel="canonical" href="https://aryan071.github.io/Portfolio/writing/ingest-throughput-honestly.html">
+  <meta property="og:title" content="What "49K spans per second" actually means | Aryan Patel">
+  <meta property="og:description" content="How I measured the ingest throughput of TraceLens: offered vs accepted vs landed rates, what limited it, and what the number does not show.">
+  <meta property="og:type" content="article">
+  <meta property="og:image" content="https://aryan071.github.io/Portfolio/assets/images/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="../assets/images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/site.css?v=13">
+  <link rel="stylesheet" href="../assets/css/page.css?v=1">
+  <script src="../assets/js/page.js?v=1"></script>
+</head>
+<body class="page">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <header class="page-nav"><div class="container">
+    <a class="back" href="../index.html">&larr; Aryan Patel</a>
+    <nav aria-label="Pages"><a href="../index.html#projects">Projects</a><a href="../index.html#writing">Writing</a><a href="../resume.html">Resume</a><a href="../index.html#contact">Contact</a></nav>
+  </div></header>
+
+  <main class="container article" id="main">
+    <p class="meta">Observability · Benchmarking · 5 min read</p>
+    <h1>What "49K spans per second" actually means</h1>
+    <p class="standfirst">A throughput number without its conditions is a slogan. Here is exactly what my TraceLens ingest figure measures, what limits it, and what it does not say.</p>
+
+    <h2>Three different numbers</h2>
+    <p>When I load-tested the ingest path I tracked three rates, because they answer different questions:</p>
+    <ul>
+      <li><strong>Offered</strong>: how fast the load generator sends spans.</li>
+      <li><strong>Accepted</strong>: how fast the receiver acknowledges them.</li>
+      <li><strong>Landed</strong>: how fast they are really stored in ClickHouse.</li>
+    </ul>
+    <p>A system can accept faster than it stores, until a buffer fills and it starts rejecting. So the honest question is: at what offered rate does it keep accepting <em>without rejecting anything</em>?</p>
+
+    <h2>The results</h2>
+    <table class="tbl"><thead><tr><th>Setup</th><th>Result</th></tr></thead><tbody>
+      <tr><td>1 ingest process</td><td>Ceiling of about <strong>24K spans/s</strong> (the process is CPU-bound; most time goes to converting spans to rows in Python)</td></tr>
+      <tr><td>4 processes, offered 50K spans/s</td><td><strong>49.1K accepted</strong>, p99 latency 223 ms, <strong>0 rejections</strong></td></tr>
+      <tr><td>4 processes, pushed to the limit (HTTP)</td><td>About <strong>81K spans/s</strong>, roughly 3.4x the single process</td></tr>
+    </tbody></table>
+    <p>So "about 49K spans per second with no rejections" is the accepted rate when 50K is offered to four processes. The maximum I measured was higher (about 81K), and a single process tops out near 24K.</p>
+
+    <h2>What I took from it</h2>
+    <ol>
+      <li><strong>Find the real bottleneck.</strong> The ceiling was one Python process pinned on conversion work, not the network or ClickHouse. Adding processes, not tuning the database, moved the number.</li>
+      <li><strong>Report the condition with the number.</strong> "49K" means nothing without "at 50K offered, 4 processes, 0 rejected, p99 223 ms".</li>
+      <li><strong>Check that nothing is lost.</strong> I also tested that every acknowledged span ends up in ClickHouse exactly once, including through shutdowns and an outage.</li>
+    </ol>
+
+    <h2>What this does not show</h2>
+    <p>These runs use synthetic traces on one machine. They show where the ingest path saturates, not how it behaves on production traffic with a different mix of span sizes.</p>
+    <p class="repo-link"><a href="https://github.com/Aryan071/Tracelens" target="_blank" rel="noopener">Read the benchmarks on GitHub &nearr;</a></p>
+  </main>
+
+  <footer class="footer"><div class="container"><p>&copy; 2026 Aryan Patel &middot; Ahmedabad, India (IST)</p><a class="to-top-link" href="../index.html">Back to portfolio</a></div></footer>
+</body>
+</html>
