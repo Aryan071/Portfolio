@@ -269,6 +269,17 @@
   }
   draw();
 
+  /* ---------- Skill icons (Simple Icons via CDN, monogram fallback) ---------- */
+  $$('.tile').forEach(function (t, i) {
+    t.style.setProperty('--n', i % 10);
+    var slug = t.getAttribute('data-icon');
+    if (!slug) return;
+    var url = 'https://cdn.jsdelivr.net/npm/simple-icons@11.14.0/icons/' + slug + '.svg';
+    var img = new Image();
+    img.onload = function () { t.style.setProperty('--src', 'url("' + url + '")'); t.classList.add('has-icon'); };
+    img.src = url; // on error the monogram stays
+  });
+
   /* ---------- Copy email, back to top ---------- */
   $('#copyMail').addEventListener('click', function () {
     var mail = 'aryancpatel07@gmail.com';
