@@ -25,19 +25,20 @@
   $('#themeBtn').addEventListener('click', toggleTheme);
   /* ---------- Colour palettes ---------- */
   var PALETTES = [
+    { id: 'graphite', name: 'Graphite (indigo)', sw: 'linear-gradient(90deg,#08090a 30%,#5e6ad2)' },
+    { id: 'midnight', name: 'Midnight Teal', sw: 'linear-gradient(90deg,#0a192f 30%,#64ffda)' },
     { id: 'emerald', name: 'Emerald', sw: 'linear-gradient(90deg,#34d399,#2dd4bf,#a3e635)' },
-    { id: 'royal', name: 'Royal Indigo', sw: 'linear-gradient(90deg,#818cf8,#a78bfa,#38bdf8)' },
     { id: 'ember', name: 'Ember', sw: 'linear-gradient(90deg,#fbbf24,#fb923c,#f43f5e)' },
-    { id: 'aurora', name: 'Aurora', sw: 'linear-gradient(90deg,#22d3ee,#a78bfa,#f472b6)' },
-    { id: 'ice', name: 'Ice Mono', sw: 'linear-gradient(90deg,#e2e8f0,#93c5fd,#60a5fa)' }
+    { id: 'aurora', name: 'Aurora', sw: 'linear-gradient(90deg,#22d3ee,#a78bfa,#f472b6)' }
   ];
-  var DEFAULT_PALETTE = 'emerald';
+  var DEFAULT_PALETTE = 'graphite';
   function setPalette(id, silent) {
     if (!PALETTES.some(function (p) { return p.id === id; })) id = DEFAULT_PALETTE;
     doc.setAttribute('data-palette', id);
     if (!silent) { try { localStorage.setItem('palette', id); } catch (e) {} }
     $$('#palPop button').forEach(function (b) { b.setAttribute('aria-checked', String(b.getAttribute('data-id') === id)); });
     readColors();
+    var tm = $('meta[name="theme-color"]'); if (tm) tm.setAttribute('content', getComputedStyle(doc).getPropertyValue('--bg').trim());
     if (!silent) toast('Palette: ' + PALETTES.filter(function (p) { return p.id === id; })[0].name);
   }
   var palPop = $('#palPop'), palBtn = $('#palBtn');
@@ -342,11 +343,11 @@
     { t: 'Go to Achievements', k: '#achievements', go: '#achievements' },
     { t: 'Go to Contact', k: '#contact', go: '#contact' },
     { t: 'Toggle light / dark theme', k: 'theme', run: toggleTheme },
+    { t: 'Palette: Graphite (indigo)', k: 'color', run: function () { setPalette('graphite'); } },
+    { t: 'Palette: Midnight Teal', k: 'color', run: function () { setPalette('midnight'); } },
     { t: 'Palette: Emerald', k: 'color', run: function () { setPalette('emerald'); } },
-    { t: 'Palette: Royal Indigo', k: 'color', run: function () { setPalette('royal'); } },
     { t: 'Palette: Ember', k: 'color', run: function () { setPalette('ember'); } },
     { t: 'Palette: Aurora', k: 'color', run: function () { setPalette('aurora'); } },
-    { t: 'Palette: Ice Mono', k: 'color', run: function () { setPalette('ice'); } },
     { t: 'Download resume', k: 'pdf', run: function () { window.location.href = 'assets/resume/Aryan_Patel_Resume.pdf'; } },
     { t: 'Open GitHub', k: 'github', run: function () { window.open('https://github.com/Aryan071', '_blank', 'noopener'); } },
     { t: 'Open LinkedIn', k: 'linkedin', run: function () { window.open('https://linkedin.com/in/aryan-patel-4272191a4/', '_blank', 'noopener'); } },
