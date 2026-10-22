@@ -104,10 +104,19 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes load { to { width: 100%; } }
 @keyframes pop { from { opacity: 0; transform: scale(0.8) translateY(10px); } }
 .progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--grad); z-index: 150; }
-.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 180; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.3s, scale 0.3s var(--ease), background 0.3s; will-change: transform; backface-visibility: hidden; }
+.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 180; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.3s, scale 0.18s var(--ease), background 0.2s, border-color 0.2s; will-change: transform; backface-visibility: hidden; }
 .cursor-dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: var(--a1); }
 .cursor-ring { width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1.5px solid color-mix(in srgb, var(--a2) 80%, transparent); }
-.cursor-ring.hover { scale: 1.7; background: color-mix(in srgb, var(--a2) 14%, transparent); }
+.cursor-ring span { position: absolute; inset: 0; display: grid; place-items: center; font: 600 0.62rem/1 var(--font); color: var(--text); opacity: 0; transition: opacity 0.2s; }
+.cursor-ring.hover { scale: 1.5; background: color-mix(in srgb, var(--a2) 14%, transparent); }
+.cursor-ring.has-label { scale: 1.9; background: color-mix(in srgb, var(--a2) 20%, transparent); border-color: var(--a1); }
+.cursor-ring.has-label span { opacity: 1; }
+.cursor-ring.down { scale: 0.8; }
+.cursor-ring.hover.down, .cursor-ring.has-label.down { scale: 1.2; }
+.cursor-trail { position: fixed; top: 0; left: 0; width: 8px; height: 8px; margin: -4px 0 0 -4px; border-radius: 50%; background: var(--a1); pointer-events: none; z-index: 179; will-change: transform; opacity: 0; transition: visibility 0s; visibility: hidden; }
+body.has-cursor .cursor-trail { visibility: visible; }
+.cursor-ripple { position: fixed; z-index: 178; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 2px solid var(--a1); pointer-events: none; animation: ripple 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+@keyframes ripple { from { scale: 1; opacity: 0.9; } to { scale: 7; opacity: 0; } }
 body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 body.has-cursor.cursor-on, body.has-cursor.cursor-on a, body.has-cursor.cursor-on button { cursor: none; }
 

@@ -225,29 +225,81 @@
     });
   }
 
-  /* ---------- Custom cursor (driven by the master frame loop below) ---------- */
+  /* ---------- Custom cursor: instant dot, snappy ring, comet trail, click ripple, hover label ---------- */
   var cursorStep = function () {};
   if (finePointer && !reduce) {
     var dot = $('#cursorDot'), ring = $('#cursorRing');
+    var label = document.createElement('span');
+    ring.appendChild(label);
+    var TRAIL = 9, trail = [];
+    for (var ti = 0; ti < TRAIL; ti++) {
+      var td = document.createElement('i');
+      td.className = 'cursor-trail';
+      td.setAttribute('aria-hidden', 'true');
+      var f0 = 1 - ti / TRAIL;
+      td.style.opacity = (0.5 * f0).toFixed(2);
+      body.appendChild(td);
+      trail.push({ el: td, x: -100, y: -100, s: 0.35 + 0.65 * f0, tau: 26 + ti * 11 });
+    }
     var mx = -100, my = -100, rx = -100, ry = -100, seen = false;
     window.addEventListener('pointermove', function (e) {
       mx = e.clientX; my = e.clientY;
-      if (!seen) { seen = true; rx = mx; ry = my; body.classList.add('has-cursor', 'cursor-on'); }
+      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)'; // zero-lag dot
+      if (!seen) {
+        seen = true; rx = mx; ry = my;
+        trail.forEach(function (t) { t.x = mx; t.y = my; });
+        body.classList.add('has-cursor', 'cursor-on');
+      }
     }, { passive: true });
     document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor'); seen = false; });
     cursorStep = function (dt) {
-      // time-based easing: same feel at 60, 120 or 144 Hz
-      var k = 1 - Math.exp(-dt / 55);
-      rx += (mx - rx) * k; ry += (my - ry) * k;
-      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+      var kr = 1 - Math.exp(-dt / 16); // ring: about 16 ms time constant, feels instant but not rigid
+      rx += (mx - rx) * kr; ry += (my - ry) * kr;
       ring.style.transform = 'translate3d(' + rx.toFixed(2) + 'px,' + ry.toFixed(2) + 'px,0)';
+      var px = mx, py = my;
+      for (var i = 0; i < trail.length; i++) {
+        var t = trail[i], k = 1 - Math.exp(-dt / t.tau);
+        t.x += (px - t.x) * k; t.y += (py - t.y) * k;
+        t.el.style.transform = 'translate3d(' + t.x.toFixed(1) + 'px,' + t.y.toFixed(1) + 'px,0) scale(' + t.s.toFixed(2) + ')';
+        px = t.x; py = t.y;
+      }
     };
+    var HOVER_SEL = 'a, button, input, .chip, .tilt, .tile';
+    function cursorLabel(el) {
+      var a = el.closest('a');
+      if (a) {
+        var h = a.getAttribute('href') || '';
+        if (a.hasAttribute('download')) return '\u2193';
+        if (h.indexOf('mailto:') === 0) return '\u2709';
+        if (h.indexOf('tel:') === 0) return '\u260E';
+        if (h.charAt(0) === '#') return '\u2192';
+        return '\u2197';
+      }
+      return '';
+    }
     document.addEventListener('pointerover', function (e) {
-      if (e.target.closest && e.target.closest('a, button, input, .chip, .tilt')) ring.classList.add('hover');
+      var t = e.target.closest && e.target.closest(HOVER_SEL);
+      if (!t) return;
+      var l = cursorLabel(t);
+      label.textContent = l;
+      ring.classList.add('hover');
+      ring.classList.toggle('has-label', !!l);
     });
     document.addEventListener('pointerout', function (e) {
-      if (e.target.closest && e.target.closest('a, button, input, .chip, .tilt')) ring.classList.remove('hover');
+      var t = e.target.closest && e.target.closest(HOVER_SEL);
+      if (!t) return;
+      ring.classList.remove('hover', 'has-label');
+      label.textContent = '';
     });
+    document.addEventListener('pointerdown', function (e) {
+      ring.classList.add('down');
+      var r = document.createElement('span');
+      r.className = 'cursor-ripple';
+      r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
+      body.appendChild(r);
+      setTimeout(function () { r.remove(); }, 700);
+    });
+    document.addEventListener('pointerup', function () { ring.classList.remove('down'); });
   }
 
   /* ---------- Particle network background ---------- */
