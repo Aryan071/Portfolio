@@ -225,21 +225,23 @@
     });
   }
 
-  /* ---------- Custom cursor ---------- */
+  /* ---------- Custom cursor (driven by the master frame loop below) ---------- */
+  var cursorStep = function () {};
   if (finePointer && !reduce) {
     var dot = $('#cursorDot'), ring = $('#cursorRing');
-    var mx = -100, my = -100, rx = -100, ry = -100;
+    var mx = -100, my = -100, rx = -100, ry = -100, seen = false;
     window.addEventListener('pointermove', function (e) {
       mx = e.clientX; my = e.clientY;
-      body.classList.add('has-cursor', 'cursor-on');
+      if (!seen) { seen = true; rx = mx; ry = my; body.classList.add('has-cursor', 'cursor-on'); }
     }, { passive: true });
-    document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor'); });
-    (function loop() {
-      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-      dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
-      ring.style.transform = 'translate(' + rx.toFixed(1) + 'px,' + ry.toFixed(1) + 'px)';
-      requestAnimationFrame(loop);
-    })();
+    document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor'); seen = false; });
+    cursorStep = function (dt) {
+      // time-based easing: same feel at 60, 120 or 144 Hz
+      var k = 1 - Math.exp(-dt / 55);
+      rx += (mx - rx) * k; ry += (my - ry) * k;
+      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)';
+      ring.style.transform = 'translate3d(' + rx.toFixed(2) + 'px,' + ry.toFixed(2) + 'px,0)';
+    };
     document.addEventListener('pointerover', function (e) {
       if (e.target.closest && e.target.closest('a, button, input, .chip, .tilt')) ring.classList.add('hover');
     });
@@ -250,7 +252,7 @@
 
   /* ---------- Particle network background ---------- */
   var canvas = $('#bg'), ctx = canvas.getContext('2d');
-  var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var W = 0, H = 0, dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   var pts = [], pointer = { x: -9999, y: -9999 };
   var col = { dot: '34,211,238', line: '167,139,250' };
   function hexToRgb(hex) {
@@ -271,7 +273,7 @@
     canvas.width = W * dpr; canvas.height = H * dpr;
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    var n = Math.min(110, Math.floor((W * H) / 16000));
+    var n = Math.min(72, Math.floor((W * H) / 20000));
     pts = [];
     for (var i = 0; i < n; i++) {
       pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35, r: Math.random() * 1.4 + 0.6 });
@@ -281,37 +283,59 @@
   window.addEventListener('pointermove', function (e) { pointer.x = e.clientX; pointer.y = e.clientY; }, { passive: true });
   resize();
 
-  var visible = true;
-  document.addEventListener('visibilitychange', function () { visible = !document.hidden; if (visible && !reduce) draw(); });
-  var raf = 0;
-  function draw() {
-    cancelAnimationFrame(raf);
+  var visible = true, running = false;
+  var BUCKETS = 4;
+  function drawFrame() {
     ctx.clearRect(0, 0, W, H);
-    for (var i = 0; i < pts.length; i++) {
-      var p = pts[i];
+    var i, j2, p, q, lines = [[], [], [], []];
+    for (i = 0; i < pts.length; i++) {
+      p = pts[i];
       if (!reduce) {
         p.x += p.vx; p.y += p.vy;
         if (p.x < 0 || p.x > W) p.vx *= -1;
         if (p.y < 0 || p.y > H) p.vy *= -1;
         var dx = p.x - pointer.x, dy = p.y - pointer.y, d2 = dx * dx + dy * dy;
-        if (d2 < 14000) { var f = (1 - d2 / 14000) * 0.8; p.x += dx / Math.sqrt(d2 + 1) * f; p.y += dy / Math.sqrt(d2 + 1) * f; }
-      }
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, 6.2832);
-      ctx.fillStyle = 'rgba(' + col.dot + ',0.65)';
-      ctx.fill();
-      for (var j = i + 1; j < pts.length; j++) {
-        var q = pts[j], ax = p.x - q.x, ay = p.y - q.y, dd = ax * ax + ay * ay;
-        if (dd < 17000) {
-          ctx.strokeStyle = 'rgba(' + col.line + ',' + (0.2 * (1 - dd / 17000)).toFixed(3) + ')';
-          ctx.lineWidth = 1;
-          ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
-        }
+        if (d2 < 14000) { var f = (1 - d2 / 14000) * 0.8, inv = f / Math.sqrt(d2 + 1); p.x += dx * inv; p.y += dy * inv; }
       }
     }
-    if (!reduce && visible) raf = requestAnimationFrame(draw);
+    // dots: one path, one fill
+    ctx.fillStyle = 'rgba(' + col.dot + ',0.65)';
+    ctx.beginPath();
+    for (i = 0; i < pts.length; i++) { p = pts[i]; ctx.moveTo(p.x + p.r, p.y); ctx.arc(p.x, p.y, p.r, 0, 6.2832); }
+    ctx.fill();
+    // lines: bucket by distance so we stroke only a few batched paths
+    for (i = 0; i < pts.length; i++) {
+      p = pts[i];
+      for (j2 = i + 1; j2 < pts.length; j2++) {
+        q = pts[j2];
+        var ax = p.x - q.x, ay = p.y - q.y, dd = ax * ax + ay * ay;
+        if (dd < 17000) lines[Math.min(BUCKETS - 1, (dd / 17000 * BUCKETS) | 0)].push(p.x, p.y, q.x, q.y);
+      }
+    }
+    ctx.lineWidth = 1;
+    for (var b2 = 0; b2 < BUCKETS; b2++) {
+      var arr = lines[b2];
+      if (!arr.length) continue;
+      ctx.strokeStyle = 'rgba(' + col.line + ',' + (0.2 * (1 - (b2 + 0.5) / BUCKETS)).toFixed(3) + ')';
+      ctx.beginPath();
+      for (var k2 = 0; k2 < arr.length; k2 += 4) { ctx.moveTo(arr[k2], arr[k2 + 1]); ctx.lineTo(arr[k2 + 2], arr[k2 + 3]); }
+      ctx.stroke();
+    }
   }
-  draw();
+
+  // One requestAnimationFrame loop: the cursor updates every frame, the canvas at ~30 fps.
+  var lastTs = 0, lastDraw = 0;
+  function frame(ts) {
+    var dt = lastTs ? Math.min(ts - lastTs, 64) : 16;
+    lastTs = ts;
+    cursorStep(dt);
+    if (ts - lastDraw >= 33) { drawFrame(); lastDraw = ts; }
+    if (visible) requestAnimationFrame(frame); else running = false;
+  }
+  function startLoop() { if (running || reduce && !finePointer) return; running = true; lastTs = 0; requestAnimationFrame(frame); }
+  document.addEventListener('visibilitychange', function () { visible = !document.hidden; if (visible) startLoop(); });
+  drawFrame();
+  if (!reduce) startLoop();
 
   /* ---------- Skill icons (Simple Icons via CDN, monogram fallback) ---------- */
   $$('.tile').forEach(function (t, i) {

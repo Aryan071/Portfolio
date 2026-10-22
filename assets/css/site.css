@@ -73,10 +73,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 /* ===== Backgrounds ===== */
 #bg { position: fixed; inset: 0; z-index: -3; width: 100%; height: 100%; }
 .aurora { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; }
-.aurora i { position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; filter: blur(90px); opacity: var(--aur, 0.32); will-change: transform; }
-.aurora i:nth-child(1) { background: var(--a1); top: -18vmax; left: -12vmax; animation: float1 22s ease-in-out infinite alternate; }
-.aurora i:nth-child(2) { background: var(--a2); top: 20vmax; right: -16vmax; animation: float2 26s ease-in-out infinite alternate; }
-.aurora i:nth-child(3) { background: var(--a3); bottom: -22vmax; left: 25vw; opacity: 0.2; animation: float3 30s ease-in-out infinite alternate; }
+.aurora i { position: absolute; width: 46vmax; height: 46vmax; border-radius: 50%; opacity: var(--aur, 0.32); will-change: transform; background: radial-gradient(circle at center, var(--c) 0%, transparent 64%); }
+.aurora i:nth-child(1) { --c: var(--a1); top: -18vmax; left: -12vmax; animation: float1 22s ease-in-out infinite alternate; }
+.aurora i:nth-child(2) { --c: var(--a2); top: 20vmax; right: -16vmax; animation: float2 26s ease-in-out infinite alternate; }
+.aurora i:nth-child(3) { --c: var(--a3); bottom: -22vmax; left: 25vw; opacity: 0.2; animation: float3 30s ease-in-out infinite alternate; }
 :root[data-theme="light"] .aurora i { opacity: var(--aur, 0.2); }
 @keyframes float1 { to { transform: translate(14vmax, 10vmax) scale(1.15); } }
 @keyframes float2 { to { transform: translate(-12vmax, -8vmax) scale(0.9); } }
@@ -104,10 +104,10 @@ button { font: inherit; color: inherit; cursor: pointer; }
 @keyframes load { to { width: 100%; } }
 @keyframes pop { from { opacity: 0; transform: scale(0.8) translateY(10px); } }
 .progress { position: fixed; top: 0; left: 0; height: 3px; width: 100%; transform-origin: 0 50%; transform: scaleX(0); background: var(--grad); z-index: 150; }
-.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 180; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.3s, width 0.25s var(--ease), height 0.25s var(--ease), background 0.25s; will-change: transform; }
+.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 180; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.3s, scale 0.3s var(--ease), background 0.3s; will-change: transform; backface-visibility: hidden; }
 .cursor-dot { width: 7px; height: 7px; margin: -3.5px 0 0 -3.5px; background: var(--a1); }
 .cursor-ring { width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1.5px solid color-mix(in srgb, var(--a2) 80%, transparent); }
-.cursor-ring.hover { width: 64px; height: 64px; margin: -32px 0 0 -32px; background: color-mix(in srgb, var(--a2) 14%, transparent); }
+.cursor-ring.hover { scale: 1.7; background: color-mix(in srgb, var(--a2) 14%, transparent); }
 body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 body.has-cursor.cursor-on, body.has-cursor.cursor-on a, body.has-cursor.cursor-on button { cursor: none; }
 
@@ -356,3 +356,7 @@ kbd { font: 0.72rem var(--mono); padding: 2px 6px; border-radius: 6px; border: 1
 .pal-pop button:hover, .pal-pop button[aria-checked="true"] { background: var(--surface-2); }
 .pal-pop .sw { width: 34px; height: 20px; border-radius: 999px; border: 1px solid var(--border); flex: none; }
 .pal-pop button[aria-checked="true"]::after { content: "✓"; margin-left: auto; color: var(--a1); }
+
+/* Performance: big cards use a solid-ish surface instead of a live backdrop blur */
+.card.glass, .stat.glass, .hero-card.glass { backdrop-filter: none; -webkit-backdrop-filter: none; background: color-mix(in srgb, var(--bg-2) 70%, transparent); }
+.cursor-dot, .cursor-ring { contain: layout style; }
