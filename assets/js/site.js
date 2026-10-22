@@ -241,21 +241,26 @@
       body.appendChild(td);
       trail.push({ el: td, x: -100, y: -100, s: 0.35 + 0.65 * f0, tau: 26 + ti * 11 });
     }
-    var mx = -100, my = -100, rx = -100, ry = -100, seen = false;
+    var mx = -100, my = -100, rx = -100, ry = -100, seen = false, lastMove = 0;
     window.addEventListener('pointermove', function (e) {
-      mx = e.clientX; my = e.clientY;
-      dot.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)'; // zero-lag dot
+      mx = e.clientX; my = e.clientY; lastMove = performance.now();
+      var pos = 'translate3d(' + mx + 'px,' + my + 'px,0)';
       if (!seen) {
-        seen = true; rx = mx; ry = my;
+        // first move: place everything exactly, without animating in from the corner
+        seen = true;
+        ring.style.transition = 'none';
         trail.forEach(function (t) { t.x = mx; t.y = my; });
         body.classList.add('has-cursor', 'cursor-on');
+        dot.style.transform = pos; ring.style.transform = pos;
+        void ring.offsetWidth;
+        ring.style.transition = '';
+        return;
       }
+      dot.style.transform = pos;   // zero-lag dot
+      ring.style.transform = pos;  // ring follows the same event; smoothness comes from a CSS transition, so it can never be left behind
     }, { passive: true });
     document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor'); seen = false; });
     cursorStep = function (dt) {
-      var kr = 1 - Math.exp(-dt / 16); // ring: about 16 ms time constant, feels instant but not rigid
-      rx += (mx - rx) * kr; ry += (my - ry) * kr;
-      ring.style.transform = 'translate3d(' + rx.toFixed(2) + 'px,' + ry.toFixed(2) + 'px,0)';
       var px = mx, py = my;
       for (var i = 0; i < trail.length; i++) {
         var t = trail[i], k = 1 - Math.exp(-dt / t.tau);
@@ -380,8 +385,8 @@
   function frame(ts) {
     var dt = lastTs ? Math.min(ts - lastTs, 64) : 16;
     lastTs = ts;
-    cursorStep(dt);
-    if (ts - lastDraw >= 33) { drawFrame(); lastDraw = ts; }
+    cursorStep(dt, ts);
+    if (ts - lastDraw >= 33 && !doc.classList.contains('overlay-open')) { drawFrame(); lastDraw = ts; }
     if (visible) requestAnimationFrame(frame); else running = false;
   }
   function startLoop() { if (running || reduce && !finePointer) return; running = true; lastTs = 0; requestAnimationFrame(frame); }
@@ -441,14 +446,14 @@
     ov.innerHTML = '<div class="dg-box" role="dialog" aria-modal="true" aria-label="Architecture diagram"><div class="dg-slot"></div><p class="dg-cap"></p></div>';
     body.appendChild(ov);
     var slot = $('.dg-slot', ov), cap = $('.dg-cap', ov);
-    function close() { ov.hidden = true; slot.innerHTML = ''; }
+    function close() { ov.hidden = true; slot.innerHTML = ''; doc.classList.remove('overlay-open'); }
     ov.addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !ov.hidden) close(); });
     $$('svg.dg').forEach(function (svg) {
       svg.setAttribute('tabindex', '0');
       var hint = document.createElement('p'); hint.className = 'dg-hint'; hint.textContent = 'Click the diagram to enlarge';
       svg.parentNode.insertBefore(hint, svg.nextSibling);
-      function open() { slot.innerHTML = ''; slot.appendChild(svg.cloneNode(true)); cap.textContent = svg.getAttribute('aria-label') + '. Click anywhere or press Esc to close.'; ov.hidden = false; }
+      function open() { slot.innerHTML = ''; slot.appendChild(svg.cloneNode(true)); cap.textContent = svg.getAttribute('aria-label') + '. Click anywhere or press Esc to close.'; ov.hidden = false; doc.classList.add('overlay-open'); }
       svg.addEventListener('click', open);
       svg.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
     });
@@ -487,6 +492,7 @@
       var link = $('.p-link', card);
       gh.href = link ? link.href : 'https://github.com/Aryan071';
       ov.hidden = false;
+      doc.classList.add('overlay-open');
       body.style.overflow = 'hidden';
       modal.scrollTop = 0;
       closeBtn.focus();
@@ -494,6 +500,7 @@
     function close() {
       if (ov.hidden) return;
       ov.hidden = true; content.innerHTML = '';
+      doc.classList.remove('overlay-open');
       body.style.overflow = '';
       if (lastFocus && lastFocus.focus) lastFocus.focus();
     }
@@ -568,8 +575,8 @@
     });
   }
   function mark() { $$('li', list).forEach(function (li, i) { li.classList.toggle('sel', i === sel); }); var s = $('li.sel', list); if (s) s.scrollIntoView({ block: 'nearest' }); }
-  function openPalette() { lastFocus = document.activeElement; overlay.hidden = false; input.value = ''; render(''); input.focus(); }
-  function closePalette() { overlay.hidden = true; if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  function openPalette() { lastFocus = document.activeElement; overlay.hidden = false; doc.classList.add('overlay-open'); input.value = ''; render(''); input.focus(); }
+  function closePalette() { overlay.hidden = true; doc.classList.remove('overlay-open'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
   function run(c) { closePalette(); if (c.go) { var t = $(c.go); if (t) t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); } else if (c.run) c.run(); }
   $('#paletteBtn').addEventListener('click', openPalette);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) closePalette(); });

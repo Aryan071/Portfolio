@@ -484,3 +484,15 @@ kbd { font: 0.72rem var(--mono); padding: 2px 6px; border-radius: 6px; border: 1
 .cs-chips .chip { margin: 0; }
 @media (max-width: 760px) { .cs-content dl { grid-template-columns: 1fr !important; } .cs-foot { flex-direction: column; align-items: stretch; } .cs-gh { justify-content: center; } }
 @media (prefers-reduced-motion: reduce) { .cs-overlay, .cs-modal { animation: none; } }
+
+/* Cursor must stay visible above every pop-up, and the page behind a pop-up stops animating */
+.cursor-dot { z-index: 400; }
+.cursor-ring { z-index: 399; }
+.cursor-trail { z-index: 398; }
+.cursor-ripple { z-index: 397; }
+body.cursor-on .cs-overlay, body.cursor-on .cs-overlay *, body.cursor-on .dg-overlay, body.cursor-on .dg-overlay *,
+body.cursor-on .palette-overlay, body.cursor-on .palette-overlay *, body.cursor-on .pal-pop button, body.cursor-on summary { cursor: none; }
+.overlay-open .aurora i, .overlay-open .track, .overlay-open .sm-row, .overlay-open .pulse, .overlay-open .caret { animation-play-state: paused; }
+
+/* Ring follows each pointer event with a short compositor-driven transition (stays in sync even if frames are late) */
+.cursor-ring { transition: opacity 0.3s, scale 0.18s var(--ease), background 0.2s, border-color 0.2s, transform 90ms cubic-bezier(0.2, 0.8, 0.2, 1); }
