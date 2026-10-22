@@ -496,3 +496,23 @@ body.cursor-on .palette-overlay, body.cursor-on .palette-overlay *, body.cursor-
 
 /* Ring follows each pointer event with a short compositor-driven transition (stays in sync even if frames are late) */
 .cursor-ring { transition: opacity 0.3s, scale 0.18s var(--ease), background 0.2s, border-color 0.2s, transform 90ms cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+/* ===== Single-object cursor ===== */
+.cursor-dot, .cursor-ring, .cursor-trail { display: none !important; }
+.cur { position: fixed; top: 0; left: 0; width: 0; height: 0; z-index: 400; pointer-events: none; opacity: 0; transition: opacity 0.3s; will-change: transform; }
+body.has-cursor .cur { opacity: 1; }
+.cur-ring, .cur-dot, .cur-label { position: absolute; border-radius: 50%; }
+.cur-ring { left: -19px; top: -19px; width: 38px; height: 38px; border: 1.5px solid color-mix(in srgb, var(--a1) 85%, transparent); transition: scale 0.28s var(--ease), background 0.25s, border-color 0.25s; will-change: transform; }
+.cur-ring::after { content: ""; position: absolute; inset: -1.5px; border-radius: 50%; border: 1.5px solid var(--a1); opacity: 0; animation: curPing 2.4s ease-out infinite; }
+@keyframes curPing { 0% { scale: 1; opacity: 0.55; } 70%, 100% { scale: 1.9; opacity: 0; } }
+.cur-dot { left: -3.5px; top: -3.5px; width: 7px; height: 7px; background: var(--a1); box-shadow: 0 0 12px color-mix(in srgb, var(--a1) 80%, transparent); transition: scale 0.25s var(--ease); }
+.cur-label { left: -19px; top: -19px; width: 38px; height: 38px; display: grid; place-items: center; font: 600 0.78rem/1 var(--font); color: var(--text); opacity: 0; scale: 0.6; transition: opacity 0.2s, scale 0.3s var(--ease); }
+.cur.hover .cur-ring { scale: 1.45; background: color-mix(in srgb, var(--a1) 12%, transparent); border-color: var(--a1); }
+.cur.hover .cur-ring::after { animation: none; }
+.cur.has-label .cur-ring { scale: 1.8; background: color-mix(in srgb, var(--a1) 18%, transparent); }
+.cur.has-label .cur-dot { scale: 0; }
+.cur.has-label .cur-label { opacity: 1; scale: 1; }
+.cur.down .cur-ring { scale: 0.7; background: color-mix(in srgb, var(--a1) 28%, transparent); }
+.cur.down.hover .cur-ring, .cur.down.has-label .cur-ring { scale: 1.2; }
+.cursor-ripple { z-index: 397; }
+@media (prefers-reduced-motion: reduce) { .cur-ring::after { animation: none; } }

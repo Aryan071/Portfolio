@@ -225,50 +225,29 @@
     });
   }
 
-  /* ---------- Custom cursor: instant dot, snappy ring, comet trail, click ripple, hover label ---------- */
+  /* ---------- Custom cursor: ONE object (ring + dot move together), stretches with speed ---------- */
   var cursorStep = function () {};
   if (finePointer && !reduce) {
-    var dot = $('#cursorDot'), ring = $('#cursorRing');
-    var label = document.createElement('span');
-    ring.appendChild(label);
-    var TRAIL = 9, trail = [];
-    for (var ti = 0; ti < TRAIL; ti++) {
-      var td = document.createElement('i');
-      td.className = 'cursor-trail';
-      td.setAttribute('aria-hidden', 'true');
-      var f0 = 1 - ti / TRAIL;
-      td.style.opacity = (0.5 * f0).toFixed(2);
-      body.appendChild(td);
-      trail.push({ el: td, x: -100, y: -100, s: 0.35 + 0.65 * f0, tau: 26 + ti * 11 });
-    }
-    var mx = -100, my = -100, rx = -100, ry = -100, seen = false, lastMove = 0;
+    var cur = $('#cursor'), ringEl = $('.cur-ring', cur), labelEl = $('.cur-label', cur);
+    var mx = -100, my = -100, seen = false;
     window.addEventListener('pointermove', function (e) {
-      mx = e.clientX; my = e.clientY; lastMove = performance.now();
-      var pos = 'translate3d(' + mx + 'px,' + my + 'px,0)';
-      if (!seen) {
-        // first move: place everything exactly, without animating in from the corner
-        seen = true;
-        ring.style.transition = 'none';
-        trail.forEach(function (t) { t.x = mx; t.y = my; });
-        body.classList.add('has-cursor', 'cursor-on');
-        dot.style.transform = pos; ring.style.transform = pos;
-        void ring.offsetWidth;
-        ring.style.transition = '';
-        return;
-      }
-      dot.style.transform = pos;   // zero-lag dot
-      ring.style.transform = pos;  // ring follows the same event; smoothness comes from a CSS transition, so it can never be left behind
+      mx = e.clientX; my = e.clientY;
+      cur.style.transform = 'translate3d(' + mx + 'px,' + my + 'px,0)'; // one element: dot and ring can never differ
+      if (!seen) { seen = true; body.classList.add('has-cursor', 'cursor-on'); }
     }, { passive: true });
     document.addEventListener('mouseleave', function () { body.classList.remove('has-cursor'); seen = false; });
+
+    // Speed-based stretch: the ring squashes along the direction of travel (centre never moves)
+    var lx = -100, ly = -100, sp = 0, ang = 0;
     cursorStep = function (dt) {
-      var px = mx, py = my;
-      for (var i = 0; i < trail.length; i++) {
-        var t = trail[i], k = 1 - Math.exp(-dt / t.tau);
-        t.x += (px - t.x) * k; t.y += (py - t.y) * k;
-        t.el.style.transform = 'translate3d(' + t.x.toFixed(1) + 'px,' + t.y.toFixed(1) + 'px,0) scale(' + t.s.toFixed(2) + ')';
-        px = t.x; py = t.y;
-      }
+      var dx = mx - lx, dy = my - ly; lx = mx; ly = my;
+      var v = Math.hypot(dx, dy) / Math.max(dt, 1);              // px per ms
+      sp += (v - sp) * (1 - Math.exp(-dt / 70));
+      if (v > 0.08) ang = Math.atan2(dy, dx);
+      var k = Math.min(sp * 0.1, 0.4);
+      ringEl.style.transform = k < 0.01 ? '' : 'rotate(' + ang.toFixed(3) + 'rad) scale(' + (1 + k).toFixed(3) + ',' + (1 - k * 0.5).toFixed(3) + ')';
     };
+
     var HOVER_SEL = 'a, button, input, .chip, .tilt, .tile';
     function cursorLabel(el) {
       var a = el.closest('a');
@@ -286,25 +265,25 @@
       var t = e.target.closest && e.target.closest(HOVER_SEL);
       if (!t) return;
       var l = cursorLabel(t);
-      label.textContent = l;
-      ring.classList.add('hover');
-      ring.classList.toggle('has-label', !!l);
+      labelEl.textContent = l;
+      cur.classList.add('hover');
+      cur.classList.toggle('has-label', !!l);
     });
     document.addEventListener('pointerout', function (e) {
       var t = e.target.closest && e.target.closest(HOVER_SEL);
       if (!t) return;
-      ring.classList.remove('hover', 'has-label');
-      label.textContent = '';
+      cur.classList.remove('hover', 'has-label');
+      labelEl.textContent = '';
     });
     document.addEventListener('pointerdown', function (e) {
-      ring.classList.add('down');
+      cur.classList.add('down');
       var r = document.createElement('span');
       r.className = 'cursor-ripple';
       r.style.left = e.clientX + 'px'; r.style.top = e.clientY + 'px';
       body.appendChild(r);
       setTimeout(function () { r.remove(); }, 700);
     });
-    document.addEventListener('pointerup', function () { ring.classList.remove('down'); });
+    document.addEventListener('pointerup', function () { cur.classList.remove('down'); });
   }
 
   /* ---------- Particle network background ---------- */
