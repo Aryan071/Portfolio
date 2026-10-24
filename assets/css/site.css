@@ -531,3 +531,20 @@ body.has-cursor .cur { opacity: 1; }
   .js .project.reveal:not(.in) { transform: perspective(1000px) rotateX(16deg) rotateY(-8deg) translateY(46px) scale(0.96); transform-origin: 50% 100%; }
 }
 .lite #hero3d { display: none; }
+
+/* ---------- Depth: layered 3D diagram plane (case-study pop-up) ---------- */
+.dg-stage { perspective: 1100px; margin: 0 0 20px; }
+.dg3d { position: relative; transform-style: preserve-3d; will-change: transform; }
+.dg3d .dg { margin: 0 !important; }
+.dg3d::before, .dg3d::after { content: ""; position: absolute; inset: 0; border-radius: 16px; border: 1px solid var(--a1); pointer-events: none; }
+.dg3d::before { transform: translateZ(-26px); opacity: 0.35; background: color-mix(in srgb, var(--a1) 5%, transparent); }
+.dg3d::after { transform: translateZ(-52px); opacity: 0.18; }
+@media (prefers-reduced-motion: no-preference) {
+  .cs-content .dg .edge { stroke-dasharray: 6 6; animation: dgflow 1.3s linear infinite; }
+  .lite .cs-content .dg .edge { animation: none; }
+}
+@keyframes dgflow { to { stroke-dashoffset: -12; } }
+.cs-content .dg .node { transition: transform 0.25s var(--ease), filter 0.25s; transform-box: fill-box; transform-origin: center; }
+.cs-content .dg .node:hover { transform: scale(1.05); filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--a2) 45%, transparent)); }
+.lite .dg3d { transform: none !important; }
+.lite .dg3d::before, .lite .dg3d::after { display: none; }
