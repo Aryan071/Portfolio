@@ -535,7 +535,7 @@
     { t: 'Open web resume', k: 'resume', run: function () { window.location.href = 'resume.html'; } },
     { t: 'Download resume', k: 'pdf', run: function () { window.location.href = 'assets/resume/Aryan_Patel_Resume.pdf'; } },
     { t: 'Open GitHub', k: 'github', run: function () { window.open('https://github.com/Aryan071', '_blank', 'noopener'); } },
-    { t: 'Open LinkedIn', k: 'linkedin', run: function () { window.open('https://linkedin.com/in/aryan-patel-4272191a4/', '_blank', 'noopener'); } },
+    { t: 'Open LinkedIn', k: 'linkedin', run: function () { window.open('https://linkedin.com/in/aryan-patel010724/', '_blank', 'noopener'); } },
     { t: 'Copy email', k: 'mail', run: function () { $('#copyMail').click(); } }
   ];
   var shown = [], sel = 0, lastFocus = null;

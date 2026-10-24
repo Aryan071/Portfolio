@@ -77,7 +77,7 @@ The website is fully responsive and tested on:
 
 - **Email**: aryancpatel07@gmail.com
 - **Phone**: +91 9106028787
-- **LinkedIn**: [Aryan Patel](https://linkedin.com/in/aryan-patel-4272191a4/)
+- **LinkedIn**: [Aryan Patel](https://linkedin.com/in/aryan-patel010724/)
 - **GitHub**: [Aryan071](https://github.com/Aryan071)
 
 ## 📝 License
