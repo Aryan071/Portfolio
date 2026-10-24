@@ -27,7 +27,7 @@ A modern, responsive portfolio website showcasing my experience as a Software En
 ### 3. Customization
 
 - Update personal information in `index.html`
-- Modify colors and styling in `assets/css/custom.css`
+- Modify colors and styling in `assets/css/site.css`
 - Add/remove sections as needed
 
 ## 🛠️ Technologies Used

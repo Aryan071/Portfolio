@@ -10,7 +10,7 @@
   canvas.setAttribute('aria-hidden', 'true');
   hero.insertBefore(canvas, hero.firstChild);
 
-  import('https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js').then(function (T) {
+  import('https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js').then(function (T) {
     var renderer;
     try { renderer = new T.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'low-power' }); }
     catch (e) { canvas.remove(); return; }
