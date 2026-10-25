@@ -93,7 +93,7 @@
     typeLoop();
     revealObserve();
   }
-  window.addEventListener('load', function () { setTimeout(start, reduce ? 0 : 900); });
+  window.addEventListener('load', function () { setTimeout(start, reduce || doc.classList.contains('lite') ? 0 : 900); });
   setTimeout(start, 2500); // safety net if load is slow
 
   /* ---------- Typed roles ---------- */
@@ -192,8 +192,8 @@
   menu.addEventListener('click', function (e) { if (e.target.tagName === 'A') closeMenu(); });
 
   /* ---------- Lighter effects mode (manual toggle + automatic on slow devices) ---------- */
-  var lite = false;
-  try { lite = localStorage.getItem('lite') === '1'; } catch (e) {}
+  var lite = window.matchMedia('(max-width: 760px), (pointer: coarse)').matches; // phones and touch screens start light
+  try { var savedLite = localStorage.getItem('lite'); if (savedLite !== null) lite = savedLite === '1'; } catch (e) {}
   var liteBtn = $('#liteBtn');
   function setLite(on, persist, quiet) {
     lite = on;
@@ -406,7 +406,7 @@
   }
   function startLoop() { if (running || reduce && !finePointer) return; running = true; lastTs = 0; requestAnimationFrame(frame); }
   document.addEventListener('visibilitychange', function () { visible = !document.hidden; if (visible) startLoop(); });
-  drawFrame();
+  if (!lite) drawFrame();
   if (!reduce) startLoop();
 
   /* ---------- Skill icons (self-hosted Simple Icons, monogram fallback) ---------- */
@@ -449,7 +449,7 @@
       '<button class="cs-close" type="button" aria-label="Close case study">&times;</button>' +
       '<header class="cs-head"><p class="cs-kicker">Case study</p><h3 id="csTitle"></h3><p class="cs-sub"></p></header>' +
       '<div class="cs-content"></div>' +
-      '<footer class="cs-foot"><div class="cs-chips"></div><a class="btn primary cs-gh" target="_blank" rel="noopener"><span>View on GitHub</span></a></footer></div>';
+      '<footer class="cs-foot"><div class="cs-chips"></div><a class="btn primary cs-gh" href="https://github.com/Aryan071" target="_blank" rel="noopener"><span>View on GitHub</span></a></footer></div>';
     body.appendChild(ov);
     var modal = $('.cs-modal', ov), titleEl = $('#csTitle', ov), subEl = $('.cs-sub', ov),
         content = $('.cs-content', ov), chipsEl = $('.cs-chips', ov), gh = $('.cs-gh', ov), closeBtn = $('.cs-close', ov);

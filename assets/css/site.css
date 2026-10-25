@@ -548,3 +548,9 @@ body.has-cursor .cur { opacity: 1; }
 .cs-content .dg .node:hover { transform: scale(1.05); filter: drop-shadow(0 6px 10px color-mix(in srgb, var(--a2) 45%, transparent)); }
 .lite .dg3d { transform: none !important; }
 .lite .dg3d::before, .lite .dg3d::after { display: none; }
+
+/* Lighter mode (phones start here): no intro screen, hero text is visible immediately */
+.lite .preloader { display: none; }
+.lite .split .ch { transform: none; opacity: 1; }
+.lite .hero .reveal { opacity: 1; transform: none; transition: none; }
+.lite .section { content-visibility: auto; contain-intrinsic-size: auto 700px; }

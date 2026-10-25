@@ -38,6 +38,13 @@
 
   /* ---------- D) scroll parallax ---------- */
   if (reduce) return;
+  if (doc.classList.contains('lite')) { // phones start in lighter mode: set up the parallax only if full effects are switched on later
+    var wait = new MutationObserver(function () { if (!doc.classList.contains('lite')) { wait.disconnect(); parallax(); } });
+    wait.observe(doc, { attributes: true, attributeFilter: ['class'] });
+    return;
+  }
+  parallax();
+  function parallax() {
   var blobs = [].slice.call(document.querySelectorAll('.aurora i'));
   var heads = [].slice.call(document.querySelectorAll('.sec-head')).map(function (h) {
     return { box: h, h2: h.querySelector('h2'), p: h.querySelector('p') };
@@ -62,4 +69,5 @@
   window.addEventListener('resize', queue);
   new MutationObserver(queue).observe(doc, { attributes: true, attributeFilter: ['class'] });
   update();
+  }
 })();

@@ -5,12 +5,24 @@
   var hero = document.getElementById('home');
   if (!hero || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
+  var booted = false;
+  function boot() {
+    if (booted || doc.classList.contains('lite')) return;
+    booted = true; obs.disconnect();
+    if (window.requestIdleCallback) requestIdleCallback(start, { timeout: 2500 }); else setTimeout(start, 1200);
+  }
+  // wait until the page has loaded; skipped (until switched on) in lighter-effects mode, which phones start in
+  var obs = new MutationObserver(boot);
+  obs.observe(doc, { attributes: true, attributeFilter: ['class'] });
+  if (document.readyState === 'complete') boot(); else window.addEventListener('load', boot);
+
+  function start() {
   var canvas = document.createElement('canvas');
   canvas.id = 'hero3d';
   canvas.setAttribute('aria-hidden', 'true');
   hero.insertBefore(canvas, hero.firstChild);
 
-  import('https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.js').then(function (T) {
+  import('https://cdn.jsdelivr.net/npm/three@0.186.1/build/three.module.min.js').then(function (T) {
     var renderer;
     try { renderer = new T.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'low-power' }); }
     catch (e) { canvas.remove(); return; }
@@ -109,4 +121,5 @@
     kick();
     requestAnimationFrame(function () { canvas.classList.add('on'); });
   }).catch(function () { canvas.remove(); });
+  }
 })();
